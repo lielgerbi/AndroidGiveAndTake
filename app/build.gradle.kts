@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.example.givetakeapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.givetakeapp"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -91,4 +91,10 @@ dependencies {
 
     // Coroutines with firebase
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1")
+
+    // ROOM
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 }

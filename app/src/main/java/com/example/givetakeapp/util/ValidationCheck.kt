@@ -3,8 +3,10 @@ package com.example.givetakeapp.util
 import android.util.Patterns
 
 fun validateEmail(email: String): RegisterValidation {
-    if (email.isEmpty() || email.isBlank() || Patterns.EMAIL_ADDRESS.equals(email))
+    if (email.isEmpty() || email.isBlank() ||
+        !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
         return RegisterValidation.Failed("Email is invalid!")
+    }
 
     return RegisterValidation.Success
 }
