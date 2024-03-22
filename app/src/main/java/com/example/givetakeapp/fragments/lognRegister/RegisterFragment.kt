@@ -41,9 +41,9 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
         binding.apply {
             buttonRegisterRegister.setOnClickListener {
                 val user = User(
+                    edEmailRegister.text.toString().trim(),
                     edFirstNameRegister.text.toString().trim(),
-                    edLastNameRegister.text.toString().trim(),
-                    edEmailRegister.text.toString().trim()
+                    edLastNameRegister.text.toString().trim()
                 )
                 val password = edPasswordRegister.text.toString()
                 viewModel.createAccount(user, password)
