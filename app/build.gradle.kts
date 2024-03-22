@@ -80,11 +80,11 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
 
     // Dagger
-    implementation("com.google.dagger:dagger:2.38.1")
+    implementation("com.google.dagger:dagger:2.48")
 
     // Dagger hilt
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     // Firebase
     implementation("com.google.firebase:firebase-auth:21.0.6")
