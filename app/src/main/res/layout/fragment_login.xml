@@ -77,18 +77,6 @@
             android:inputType="textPassword"
             android:layout_marginTop="15dp"/>
 
-        <TextView
-            android:id="@+id/tvForgotPasswordLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/h2"
-            app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
-            app:layout_constraintTop_toBottomOf="@id/edPasswordLogin"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:text="Forgot password"
-            android:textColor="@color/black"
-            />
 
         <ImageView
             android:id="@+id/facebookLogin"
@@ -132,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
             style="@style/blueButtonStyle"
-            app:layout_constraintTop_toBottomOf="@id/tvForgotPasswordLogin"
+            app:layout_constraintTop_toBottomOf="@id/edPasswordLogin"
             app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
             app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
             android:layout_marginTop="15dp"
