@@ -1,4 +1,4 @@
-package com.example.givetakeapp.fragments.lognRegister
+package com.example.givetakeapp.fragments.loginRegister
 
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.givetakeapp.R
@@ -18,7 +17,6 @@ import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 
 private val TAG = "RegisterFragment"

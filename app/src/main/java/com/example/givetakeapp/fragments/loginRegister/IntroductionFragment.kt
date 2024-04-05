@@ -1,4 +1,4 @@
-package com.example.givetakeapp.fragments.lognRegister
+package com.example.givetakeapp.fragments.loginRegister
 
 import android.os.Bundle
 import android.view.LayoutInflater

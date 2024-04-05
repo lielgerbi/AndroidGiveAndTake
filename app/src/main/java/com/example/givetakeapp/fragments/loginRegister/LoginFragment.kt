@@ -1,4 +1,4 @@
-package com.example.givetakeapp.fragments.lognRegister
+package com.example.givetakeapp.fragments.loginRegister
 
 import android.content.Intent
 import android.os.Bundle
