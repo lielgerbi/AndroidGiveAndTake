@@ -8,9 +8,9 @@ import com.example.givetakeapp.data.Product
 
 @Dao
 interface ProductDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun getCategories()
 
     @Query("SELECT * FROM products")
-    suspend fun getAllUsers(): List<Product>
+    suspend fun getAllProducts(): List<Product>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertProduct(product: Product)
 }

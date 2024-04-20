@@ -12,13 +12,15 @@ import com.example.givetakeapp.util.Resource
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-
+import com.example.givetakeapp.viewmodel.CartViewModel
 @AndroidEntryPoint
 class ShoppingActivity : AppCompatActivity() {
 
     val binding by lazy {
         ActivityShoppingBinding.inflate(layoutInflater)
     }
+
+    //val viewModel by viewModels<CartViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
