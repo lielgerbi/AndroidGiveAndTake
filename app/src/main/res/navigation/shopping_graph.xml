@@ -28,10 +28,18 @@
         android:id="@+id/profileFragment"
         android:name="com.example.givetakeapp.fragments.shopping.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_userAccountFragment"
+            app:destination="@id/userAccountFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.example.givetakeapp.fragments.shopping.ProductDetailsFragment"
         android:label="ProductDetailsFragment"
         tools:layout="@layout/fragment_product_details"/>
+    <fragment
+        android:id="@+id/userAccountFragment"
+        android:name="com.example.givetakeapp.fragments.settings.UserAccountFragment"
+        android:label="UserAccountFragment" />
 </navigation>

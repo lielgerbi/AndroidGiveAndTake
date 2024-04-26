@@ -2,6 +2,8 @@ package com.example.givetakeapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.givetakeapp.SharedData
+import com.example.givetakeapp.data.User
 import com.example.givetakeapp.util.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
@@ -19,6 +22,14 @@ class LoginViewModel @Inject constructor(
     val login = _login.asSharedFlow()
 
     fun login(email: String, password: String) {
+
+        //todo - change
+
+        SharedData.myVariable = email
+
+
+
+
         viewModelScope.launch {
             _login.emit(Resource.Loading())
         }

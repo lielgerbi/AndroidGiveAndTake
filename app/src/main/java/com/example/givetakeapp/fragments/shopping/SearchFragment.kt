@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.givetakeapp.MainApp
+import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.data.Product
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.databinding.FragmentSearchBinding
@@ -63,8 +64,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             // Retrieve all products from the database
             val allProducts = MainApp.database.productDao().getAllProducts()
 
-            // Print the list of products
-            allProducts.forEach { println(it) }
+            // Change navigation to shopping
+            Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
+                // Make sure pressing back dont go back to login
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
 
         }
     }

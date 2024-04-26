@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.givetakeapp.R
+import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.databinding.FragmentLoginBinding
 import com.example.givetakeapp.util.Resource

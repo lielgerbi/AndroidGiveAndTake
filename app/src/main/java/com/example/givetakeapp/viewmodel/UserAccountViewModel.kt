@@ -1,0 +1,88 @@
+package com.example.givetakeapp.viewmodel
+
+import android.app.Application
+import android.net.Uri
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.givetakeapp.MainApp
+import com.example.givetakeapp.SharedData
+import com.example.givetakeapp.data.Product
+import com.example.givetakeapp.data.User
+import com.example.givetakeapp.util.RegisterValidation
+import com.example.givetakeapp.util.Resource
+import com.example.givetakeapp.util.validateEmail
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
+
+@HiltViewModel
+class UserAccountViewModel @Inject constructor(
+    app: Application
+) : AndroidViewModel(app) {
+
+    private val _user = MutableStateFlow<Resource<User>>(Resource.Unspecified())
+    val user = _user.asStateFlow()
+
+    private val _updateInfo = MutableStateFlow<Resource<User>>(Resource.Unspecified())
+    val updateInfo = _updateInfo.asStateFlow()
+
+    init {
+        getUser()
+    }
+
+    fun getUser() {
+        var user: User;
+        viewModelScope.launch {
+            _user.emit(Resource.Loading())
+        }
+        viewModelScope.launch {
+            runBlocking {
+               // user = MainApp.database.userDao().getAllUsers()
+
+                user = MainApp.database.userDao().getUserByEmail(SharedData.myVariable)
+            }
+
+            _user.emit(Resource.Success(user))
+        }
+
+
+    }
+
+    fun updateUser(user: User, imageUri: Uri?) {
+        val areInputsValid = validateEmail(user.email) is RegisterValidation.Success
+                && user.firstName.trim().isNotEmpty()
+                && user.lastName.trim().isNotEmpty()
+
+        if (!areInputsValid) {
+            viewModelScope.launch {
+                _user.emit(Resource.Error("Check your inputs"))
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _updateInfo.emit(Resource.Loading())
+        }
+
+        if (imageUri == null) {
+            saveUserInformation(user, true)
+            SharedData.myVariable =user.email
+        } else {
+            saveUserInformationWithNewImage(user, imageUri)
+            SharedData.myVariable =user.email
+        }
+
+    }
+
+    private fun saveUserInformationWithNewImage(user: User, imageUri: Uri) {
+
+    }
+
+    private fun saveUserInformation(user: User, shouldRetrievedOldImage: Boolean) {
+
+    }
+
+}

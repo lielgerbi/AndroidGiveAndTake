@@ -3,6 +3,7 @@ package com.example.givetakeapp.viewmodel
 import android.text.BoringLayout
 import androidx.lifecycle.ViewModel
 import com.example.givetakeapp.MainApp
+import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.util.RegisterFieldState
 import com.example.givetakeapp.util.RegisterValidation

@@ -13,4 +13,13 @@ interface ProductDao {
     suspend fun getAllProducts(): List<Product>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: Product)
+
+    @Query("DELETE FROM products")
+    suspend fun deleteAllProducts()
+
+
+    @Query("SELECT * FROM products WHERE category = :category")
+    suspend fun getAllProductsByCategory(category: String): List<Product>
+
+
 }
