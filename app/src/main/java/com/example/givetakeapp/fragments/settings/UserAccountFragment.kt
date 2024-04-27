@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.givetakeapp.R
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.databinding.FragmentUserAccountBinding
 //import com.example.givetakeapp.dialog.setupBottomSheetDialog
@@ -98,16 +99,13 @@ class UserAccountFragment : Fragment() {
                 val firstName = edFirstName.text.toString().trim()
                 val lastName = edLastName.text.toString().trim()
                 val email = edEmail.text.toString().trim()
-                val user = User(firstName, lastName, email)
+                val user = User(email, firstName , lastName)
                 viewModel.updateUser(user, imageUri)
             }
+            findNavController().navigate(R.id.action_userAccountFragment_to_profileFragment)
         }
 
-        binding.imageEdit.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            imageActivityResultLauncher.launch(intent)
-        }
+
 
     }
 
@@ -124,7 +122,6 @@ class UserAccountFragment : Fragment() {
         binding.apply {
             progressbarAccount.visibility = View.GONE
             imageUser.visibility = View.VISIBLE
-            imageEdit.visibility = View.VISIBLE
             edFirstName.visibility = View.VISIBLE
             edLastName.visibility = View.VISIBLE
             edEmail.visibility = View.VISIBLE
@@ -137,7 +134,6 @@ class UserAccountFragment : Fragment() {
         binding.apply {
             progressbarAccount.visibility = View.VISIBLE
             imageUser.visibility = View.INVISIBLE
-            imageEdit.visibility = View.INVISIBLE
             edFirstName.visibility = View.INVISIBLE
             edLastName.visibility = View.INVISIBLE
             edEmail.visibility = View.INVISIBLE

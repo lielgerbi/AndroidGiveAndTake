@@ -67,12 +67,14 @@ class UserAccountViewModel @Inject constructor(
             _updateInfo.emit(Resource.Loading())
         }
 
-        if (imageUri == null) {
-            saveUserInformation(user, true)
+        viewModelScope.launch {
+            runBlocking {
+                // user = MainApp.database.userDao().getAllUsers()
+
+                MainApp.database.userDao().insertUser(user)
+            }
             SharedData.myVariable =user.email
-        } else {
-            saveUserInformationWithNewImage(user, imageUri)
-            SharedData.myVariable =user.email
+            _updateInfo.emit(Resource.Success(user))
         }
 
     }

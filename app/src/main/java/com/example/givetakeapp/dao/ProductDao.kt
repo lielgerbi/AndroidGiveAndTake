@@ -1,5 +1,6 @@
 package com.example.givetakeapp.dao
 
+import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -20,6 +21,11 @@ interface ProductDao {
 
     @Query("SELECT * FROM products WHERE category = :category")
     suspend fun getAllProductsByCategory(category: String): List<Product>
+
+    @Query("SELECT * FROM products WHERE userEmail = :userEmail")
+    suspend fun getAllProductsByUser(userEmail: String): List<Product>
+
+
 
 
 }

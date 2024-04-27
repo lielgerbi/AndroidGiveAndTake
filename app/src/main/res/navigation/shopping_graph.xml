@@ -41,5 +41,9 @@
     <fragment
         android:id="@+id/userAccountFragment"
         android:name="com.example.givetakeapp.fragments.settings.UserAccountFragment"
-        android:label="UserAccountFragment" />
+        android:label="UserAccountFragment" >
+        <action
+            android:id="@+id/action_userAccountFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

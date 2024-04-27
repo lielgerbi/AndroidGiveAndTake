@@ -12,12 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.givetakeapp.MainApp
+import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.data.Product
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.databinding.FragmentSearchBinding
 import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
+import java.util.UUID
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var binding: FragmentSearchBinding
@@ -47,9 +49,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val description = binding.edDescription.text.toString()
 
         val product = Product(
-            id = category, // Generate your own unique ID for the product
+            id = generateUUID(), // Generate unique ID for the product
             category = category,
-            userEmail = "user_email@example.com", // Set the user's email
+            userEmail = SharedData.myVariable, // Set the user's email
             city = "city_name", // Set the city
             imagePath = imageUrl ?: ""
         )
@@ -57,6 +59,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         println(product)
         saveProduct(product)
 
+    }
+    fun generateUUID(): String {
+        return UUID.randomUUID().toString()
     }
     private fun saveProduct(product: Product) {
         runBlocking {

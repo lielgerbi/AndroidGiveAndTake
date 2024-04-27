@@ -68,22 +68,12 @@
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_marginTop="24dp"
-            android:src="@color/black"
+            android:src="@drawable/ic_profile"
             app:layout_constraintEnd_toEndOf="@id/rightGuideline"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="@id/leftGuideline"
             app:layout_constraintTop_toBottomOf="@+id/toolbarUserAccount" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageEdit"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/settings_items_background"
-            android:backgroundTint="#5E85F9"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintBottom_toBottomOf="@id/imageUser"
-            app:layout_constraintEnd_toEndOf="@id/imageUser" />
 
 
         <EditText
