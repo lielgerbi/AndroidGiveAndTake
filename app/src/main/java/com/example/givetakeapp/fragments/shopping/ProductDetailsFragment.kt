@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.givetakeapp.R
 import com.example.givetakeapp.databinding.FragmentProductDetailsBinding
 import com.example.givetakeapp.util.hideBottomNavigationView
+import com.example.givetakeapp.util.showBottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +58,8 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
-
-
-
+    override fun onResume() {
+        super.onResume()
+        showBottomNavigationView()
+    }
 }

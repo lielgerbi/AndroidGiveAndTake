@@ -21,39 +21,33 @@ class MainCategoryViewModel @Inject constructor(
     private val _bestProducts = MutableStateFlow<Resource<List<Product>>>(Resource.Unspecified())
     val bestProducts: StateFlow<Resource<List<Product>>> = _bestProducts
 
-   // private val pagingInfo = PagingInfo()
+    private val pagingInfo = PagingInfo()
 
     init {
         fetchBestProducts()
     }
-
-
-
-
-
     fun fetchBestProducts() {
         var allProducts: List<Product>;
-//        if (!pagingInfo.isPagingEnd) {
+       if (!pagingInfo.isPagingEnd) {
             viewModelScope.launch {
                 _bestProducts.emit(Resource.Loading())
                 runBlocking {
-                    // Retrieve all products from the database
+                     //Retrieve all products from the database
                      allProducts = MainApp.database.productDao().getAllProducts()
                 }
-
-              //  pagingInfo.isPagingEnd = allProducts == pagingInfo.oldBestProducts
-               // pagingInfo.oldBestProducts = allProducts
+                pagingInfo.isPagingEnd = allProducts == pagingInfo.oldBestProducts
+                pagingInfo.oldBestProducts = allProducts
                 viewModelScope.launch {
                     _bestProducts.emit(Resource.Success(allProducts))
                 }
-//                pagingInfo.bestProductsPage++
-//            }
+                pagingInfo.bestProductsPage++
+            }
         }
     }
 }
 
-//internal data class PagingInfo(
-//    var bestProductsPage: Long = 1,
-//    var oldBestProducts: List<Product> = emptyList(),
-//    var isPagingEnd: Boolean = false
-//)
+internal data class PagingInfo(
+    var bestProductsPage: Long = 1,
+    var oldBestProducts: List<Product> = emptyList(),
+    var isPagingEnd: Boolean = false
+)
