@@ -56,6 +56,8 @@ class RegisterViewModel @Inject constructor(
 
     private fun saveUser(user: User) {
         runBlocking {
+
+            MainApp.database.productDao().deleteAllProducts()
             MainApp.database.userDao().insertUser(user)
         }
     }

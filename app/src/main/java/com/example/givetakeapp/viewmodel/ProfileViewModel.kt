@@ -34,7 +34,6 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             runBlocking {
                 // user = MainApp.database.userDao().getAllUsers()
-
                 user = MainApp.database.userDao().getUserByEmail(SharedData.myVariable)
             }
 

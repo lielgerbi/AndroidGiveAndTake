@@ -45,15 +45,19 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun saveNewProduct(){
-        val category = binding.edCategory.text.toString()
+        val category = binding.spCategory.selectedItem.toString()
+        val city = binding.spCity.selectedItem.toString()
         val description = binding.edDescription.text.toString()
+       // val contant = binding.edName.text.toString()
+
 
         val product = Product(
             id = generateUUID(), // Generate unique ID for the product
-            category = category,
+            category = category, // set the category
             userEmail = SharedData.myVariable, // Set the user's email
-            city = "city_name", // Set the city
-            imagePath = imageUrl ?: ""
+            city = city, // Set the city
+//            description= description,
+            imagePath = imageUrl ?: "" //set image in base64
         )
         // Print the product details
         println(product)
@@ -65,6 +69,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
     private fun saveProduct(product: Product) {
         runBlocking {
+            //MainApp.database.productDao().deleteAllProducts()
             MainApp.database.productDao().insertProduct(product)
             // Retrieve all products from the database
             val allProducts = MainApp.database.productDao().getAllProducts()

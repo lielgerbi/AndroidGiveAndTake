@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,18 +23,16 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPagerProductImages"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
 
             <ImageView
-                android:id="@+id/imageClose"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_close"
-                android:padding="5dp"
-                app:tint="@color/g_black"/>
+                android:id="@+id/img_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
 
         </androidx.cardview.widget.CardView>
@@ -60,81 +59,71 @@
                 android:text="Lofcoding"/>
 
             <TextView
-                android:id="@+id/tvProductPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/h3"
-                android:textColor="@color/g_gray700"
-                android:text="$6000"/>
+            android:id="@+id/tvProductCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/h3"
+            android:textColor="@color/g_gray700"
+            android:text="city"/>
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvProductDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             style="@style/h3"
+            android:layout_width="380dp"
+            android:layout_height="46dp"
+            android:text="Description"
             android:textColor="@color/g_gray700"
-            app:layout_constraintTop_toBottomOf="@id/linearTitlePrice"
-            app:layout_constraintStart_toStartOf="@id/linearTitlePrice"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:text="$6000"/>
+            app:layout_constraintStart_toStartOf="@id/linearTitlePrice"
+            app:layout_constraintTop_toBottomOf="@id/linearTitlePrice" />
+
+
+        <TextView
+            android:id="@+id/tvProductContat"
+            style="@style/h3"
+            android:layout_width="99dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="4dp"
+            android:text="user"
+            android:textColor="@color/g_gray700"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/linearTitlePrice"
+            app:layout_constraintTop_toBottomOf="@+id/tvProductDescription" />
 
         <View
             android:id="@+id/topLine"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="@color/g_line"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProductDescription"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="44dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"/>
+            android:background="@color/g_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvProductDescription" />
+
 
         <LinearLayout
             android:id="@+id/linearProductPref"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="72dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/topLine"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/topLine"
             app:layout_constraintTop_toBottomOf="@id/topLine">
 
 
-            <LinearLayout
-                android:layout_width="405dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvProductColors"
-                    style="@style/h3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Comments"
-                    android:textColor="@color/black" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvColors"
-                    android:layout_width="367dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" />
-
         </LinearLayout>
 
         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-            android:id="@+id/buttonAddToCart"
+            android:id="@+id/buttonAllProducts"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
             style="@style/blueButtonStyle"
@@ -144,7 +133,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="45dp"
             android:layout_marginBottom="20dp"
-            android:text="Add to cart"
+            android:text="All Products"
             app:spinning_bar_color="@color/white"/>
 
 

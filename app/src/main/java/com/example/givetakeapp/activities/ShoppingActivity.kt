@@ -1,6 +1,7 @@
 package com.example.givetakeapp.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +29,7 @@ class ShoppingActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.shoppingHostFragment)
         binding.bottomNavigation.setupWithNavController(navController)
-
+        binding.bottomNavigation.visibility = View.VISIBLE
 //        lifecycleScope.launchWhenStarted {
 //            viewModel.cartProducts.collectLatest {
 //                when (it) {
@@ -45,5 +46,7 @@ class ShoppingActivity : AppCompatActivity() {
 //            }
 //        }
     }
+    // Function to show the bottom navigation
+
 
 }

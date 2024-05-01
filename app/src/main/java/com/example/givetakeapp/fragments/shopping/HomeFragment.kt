@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.givetakeapp.R
+import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.adapters.HomeViewpagerAdapter
 import com.example.givetakeapp.databinding.FragmentHomeBinding
 import com.example.givetakeapp.fragments.categories.AccessoryFragment
@@ -56,4 +57,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }.attach()
     }
+
+
 }

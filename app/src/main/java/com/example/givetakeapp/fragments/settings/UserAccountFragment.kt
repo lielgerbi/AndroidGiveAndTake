@@ -81,7 +81,7 @@ class UserAccountFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         binding.buttonSave.revertAnimation()
-                        findNavController().navigateUp()
+                        //findNavController().navigateUp()
                     }
                     is Resource.Error -> {
                         binding.buttonSave.revertAnimation()
@@ -93,17 +93,27 @@ class UserAccountFragment : Fragment() {
         }
 
 
-
-        binding.buttonSave.setOnClickListener {
-            binding.apply {
-                val firstName = edFirstName.text.toString().trim()
-                val lastName = edLastName.text.toString().trim()
-                val email = edEmail.text.toString().trim()
-                val user = User(email, firstName , lastName)
-                viewModel.updateUser(user, imageUri)
+        binding.apply {
+            buttonSave.setOnClickListener {
+                val user = User(
+                    edEmail.text.toString().trim(),
+                    edFirstName.text.toString().trim(),
+                    edLastName.text.toString().trim()
+                )
+                viewModel.updateUser(user)
+                findNavController().navigate(R.id.action_userAccountFragment_to_homeFragment)
             }
-            findNavController().navigate(R.id.action_userAccountFragment_to_profileFragment)
         }
+//        binding.buttonSave.setOnClickListener {
+//            binding.apply {
+//                val firstName = edFirstName.text.toString().trim()
+//                val lastName = edLastName.text.toString().trim()
+//                val email = edEmail.text.toString().trim()
+//                val user = User(email, firstName , lastName)
+//                viewModel.updateUser(user)
+//            }
+//            //findNavController().navigate(R.id.action_userAccountFragment_to_homeFragment)
+//        }
 
 
 

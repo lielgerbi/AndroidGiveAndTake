@@ -50,6 +50,7 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
                 )
                 val password = edPasswordRegister.text.toString()
                 viewModel.createAccount(user, password)
+                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
             }
         }
 
@@ -60,11 +61,9 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
                         binding.buttonRegisterRegister.startAnimation()
                     }
                     is Resource.Success -> {
-                        Log.d("test", it.message.toString())
                         binding.buttonRegisterRegister.revertAnimation()
                     }
                     is Resource.Error -> {
-                        Log.e(TAG, it.message.toString())
                         binding.buttonRegisterRegister.revertAnimation()
                     }
                     else -> Unit

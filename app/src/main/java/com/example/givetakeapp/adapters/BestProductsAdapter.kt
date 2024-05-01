@@ -17,6 +17,8 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
         fun bind(product: Product) {
             binding.apply {
                 tvName.text = product.category
+                tvCity.text = product.city
+                tvUserName.text = product.userEmail
                 // Decode base64 string to bitmap
                 val decodedImage = decodeBase64ToBitmap(product.imagePath)
                 imgProduct.setImageBitmap(decodedImage)

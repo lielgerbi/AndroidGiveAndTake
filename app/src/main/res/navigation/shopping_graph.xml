@@ -23,7 +23,11 @@
         android:id="@+id/cartFragment"
         android:name="com.example.givetakeapp.fragments.shopping.CartFragment"
         android:label="CartFragment"
-        tools:layout="@layout/fragment_cart"/>
+        tools:layout="@layout/fragment_cart">
+        <action
+            android:id="@+id/action_cartFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.givetakeapp.fragments.shopping.ProfileFragment"
@@ -37,13 +41,20 @@
         android:id="@+id/productDetailsFragment"
         android:name="com.example.givetakeapp.fragments.shopping.ProductDetailsFragment"
         android:label="ProductDetailsFragment"
-        tools:layout="@layout/fragment_product_details"/>
+        tools:layout="@layout/fragment_product_details">
+        <argument
+            android:name="product"
+            app:argType="com.example.givetakeapp.data.Product" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userAccountFragment"
         android:name="com.example.givetakeapp.fragments.settings.UserAccountFragment"
         android:label="UserAccountFragment" >
         <action
-            android:id="@+id/action_userAccountFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_userAccountFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

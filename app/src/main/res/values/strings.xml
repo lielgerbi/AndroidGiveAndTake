@@ -1,5 +1,19 @@
 <resources>
-    <string name="app_name">KelineYt</string>
+    <string name="app_name">GiveTake</string>
     <string name="rightAddress">The Right Address\nFor Shopping\nAnyday</string>
     <string name="qulity">It is now very easy to reach the\nbest quality among the\nproducts on the internet!</string>
+    <string name="select_category">Select Category</string>
+    <array name="category_options">
+        <item>Chair</item>
+        <item>Cupboard</item>
+        <item>Furniture</item>
+        <item>Table</item>
+        <item>Accessory</item>
+    </array>
+    <string name="select_city">Select Category</string>
+    <array name="city_options">
+        <item>TelAviv</item>
+        <item>LOD</item>
+        <item>Ashdod</item>
+    </array>
 </resources>
