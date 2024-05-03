@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -59,14 +60,15 @@
 
         <EditText
             android:id="@+id/edFirstNameRegister"
+            style="@style/editText"
             android:layout_width="0dp"
             android:layout_height="@dimen/edittextHeight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/tvDoYouHaveAccount"
-            style="@style/editText"
+            android:layout_marginTop="28dp"
             android:hint="First Name"
-            android:layout_marginTop="50dp"/>
+            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@id/tvDoYouHaveAccount" />
 
         <EditText
             android:id="@+id/edLastNameRegister"
@@ -103,54 +105,30 @@
             android:inputType="textPassword"
             android:layout_marginTop="10dp"/>
 
+
         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/buttonRegisterRegister"
+            style="@style/blueButtonStyle"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
-            style="@style/blueButtonStyle"
-            app:layout_constraintTop_toBottomOf="@id/edPasswordRegister"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="96dp"
             android:text="Register"
-            app:spinning_bar_color="@color/white"/>
-
-        <ImageView
-            android:id="@+id/facebookRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister"
-            android:src="@drawable/facebook_login"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Facebook"
-            app:layout_constraintStart_toStartOf="@id/facebookRegister"
-            app:layout_constraintTop_toTopOf="@id/facebookRegister"
-            app:layout_constraintBottom_toBottomOf="@id/facebookRegister"
-            app:layout_constraintEnd_toEndOf="@id/facebookRegister"/>
-
-
-        <ImageView
-            android:id="@+id/googleRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
             app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/buttonRegisterRegister"
-            android:src="@drawable/google_login"/>
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@id/edPasswordRegister"
+            app:spinning_bar_color="@color/white" />
 
-        <TextView
+        <Button
+            android:id="@+id/buttonImagesPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Google"
-            app:layout_constraintStart_toStartOf="@id/googleRegister"
-            app:layout_constraintTop_toTopOf="@id/googleRegister"
-            app:layout_constraintBottom_toBottomOf="@id/googleRegister"
-            app:layout_constraintEnd_toEndOf="@id/googleRegister"/>
+            android:layout_marginTop="24dp"
+            android:text="Upload Profile Image"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edPasswordRegister" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineRegisterLeft"

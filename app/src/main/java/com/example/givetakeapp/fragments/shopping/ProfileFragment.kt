@@ -1,9 +1,12 @@
 package com.example.givetakeapp.fragments.shopping
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,9 +64,12 @@ class ProfileFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         binding.progressbarSettings.visibility = View.GONE
-                        Glide.with(requireView()).load(it.data!!.imagePath).error(ColorDrawable(
+                        Glide.with(requireView()).load(decodeBase64ToBitmap(it.data!!.imagePath)).error(ColorDrawable(
                             Color.BLACK)).into(binding.imageUser)
                         binding.tvUserName.text = "${it.data.firstName} ${it.data.lastName}"
+
+
+
                     }
                     is Resource.Error -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -75,6 +81,10 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun decodeBase64ToBitmap(base64String: String): Bitmap {
+        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    }
     override fun onResume() {
         super.onResume()
 

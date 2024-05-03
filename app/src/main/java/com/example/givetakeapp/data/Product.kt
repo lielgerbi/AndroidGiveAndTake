@@ -12,8 +12,8 @@ data class Product(
     val category: String,
     val userEmail: String,
     val city: String,
-    //val description: String,
+    val description: String,
     var imagePath: String = ""
 ) : Parcelable {
-    constructor(): this("","","","","")
+    constructor(): this("","","","","","")
 }

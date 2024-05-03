@@ -1,10 +1,13 @@
 package com.example.givetakeapp.fragments.settings
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,13 +124,16 @@ class UserAccountFragment : Fragment() {
 
     private fun showUserInformation(data: User) {
         binding.apply {
-            Glide.with(this@UserAccountFragment).load(data.imagePath).error(ColorDrawable(Color.BLACK)).into(imageUser)
+            Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(data.imagePath)).error(ColorDrawable(Color.BLACK)).into(imageUser)
             edFirstName.setText(data.firstName)
             edLastName.setText(data.lastName)
             edEmail.setText(data.email)
         }
     }
-
+    private fun decodeBase64ToBitmap(base64String: String): Bitmap {
+        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    }
     private fun hideUserLoading() {
         binding.apply {
             progressbarAccount.visibility = View.GONE

@@ -1,6 +1,5 @@
 package com.example.givetakeapp.dao
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy

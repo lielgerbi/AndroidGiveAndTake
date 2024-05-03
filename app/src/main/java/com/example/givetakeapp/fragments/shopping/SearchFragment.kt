@@ -20,6 +20,15 @@ import com.example.givetakeapp.databinding.FragmentSearchBinding
 import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 import java.util.UUID
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import android.os.AsyncTask
+import android.widget.ArrayAdapter
+
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var binding: FragmentSearchBinding
@@ -36,11 +45,61 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Call API to fetch cities
+        FetchCitiesTask().execute()
+
         binding.buttonImagesPicker.setOnClickListener {
             openImagePicker()
         }
         binding.buttonColorPicker.setOnClickListener {
             saveNewProduct()
+        }
+    }
+
+    private inner class FetchCitiesTask : AsyncTask<Void, Void, List<String>>() {
+
+        override fun doInBackground(vararg params: Void?): List<String>? {
+            val cities = mutableListOf<String>()
+            try {
+                val url =
+                    URL("http://api.geonames.org/searchJSON?country=IL&username=liel&maxRows=10")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.connect()
+
+                val bufferedReader =
+                    BufferedReader(InputStreamReader(connection.inputStream))
+                val stringBuilder = StringBuilder()
+                var line: String?
+                while (bufferedReader.readLine().also { line = it } != null) {
+                    stringBuilder.append(line)
+                }
+                bufferedReader.close()
+
+                val response = stringBuilder.toString()
+                val jsonResponse = JSONObject(response)
+                val geonamesArray = jsonResponse.getJSONArray("geonames")
+
+                for (i in 0 until geonamesArray.length()) {
+                    val cityObject = geonamesArray.getJSONObject(i)
+                    val cityName = cityObject.getString("name")
+                    cities.add(cityName)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return cities
+        }
+        override fun onPostExecute(result: List<String>?) {
+            super.onPostExecute(result)
+            if (result != null) {
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    result
+                )
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spCity.adapter = adapter
+            }
         }
     }
 
@@ -56,7 +115,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             category = category, // set the category
             userEmail = SharedData.myVariable, // Set the user's email
             city = city, // Set the city
-//            description= description,
+            description= description,
             imagePath = imageUrl ?: "" //set image in base64
         )
         // Print the product details

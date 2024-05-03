@@ -44,8 +44,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             val b = Bundle().apply {
                 putParcelable("product", it)
             }
-            //todo - copy nav
-//            findNavController().navigate(R.id.action_cartFragment_to_productDetailsFragment, b)
+            findNavController().navigate(R.id.action_cartFragment_to_productDetailsFragment, b)
         }
 
 

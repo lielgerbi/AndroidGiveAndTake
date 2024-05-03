@@ -54,7 +54,7 @@ class ProductDetailsFragment : Fragment() {
             val decodedImage = decodeBase64ToBitmap(product.imagePath)
             imgProduct.setImageBitmap(decodedImage)
             //todo - fix
-            //tvProductDescription.text = product.description
+            tvProductDescription.text = product.description
         }
     }
 
