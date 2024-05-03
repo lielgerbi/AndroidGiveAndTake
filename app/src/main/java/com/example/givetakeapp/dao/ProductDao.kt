@@ -25,6 +25,9 @@ interface ProductDao {
     suspend fun getAllProductsByUser(userEmail: String): List<Product>
 
 
+    @Query("DELETE FROM products where id = :id")
+    suspend fun deleteProduct(id: String)
+
 
 
 }

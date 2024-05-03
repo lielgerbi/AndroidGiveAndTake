@@ -19,6 +19,7 @@ import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.VerticalItemDecoration
 import com.example.givetakeapp.viewmodel.CartViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.runBlocking
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private lateinit var binding: FragmentCartBinding
@@ -47,31 +48,16 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             findNavController().navigate(R.id.action_cartFragment_to_productDetailsFragment, b)
         }
 
-
-
         cartAdapter.onMinusClick = {
+            viewModel.deleteProduct(it)
+            findNavController().navigate(R.id.action_cartFragment_to_homeFragment)
         }
 
 
 
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.deleteDialog.collectLatest {
-                val alertDialog = AlertDialog.Builder(requireContext()).apply {
-                    setTitle("Delete item from cart")
-                    setMessage("Do you want to delete this item from your cart?")
-                    setNegativeButton("Cancel") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    setPositiveButton("Yes") { dialog, _ ->
-                        viewModel.deleteCartProduct(it)
-                        dialog.dismiss()
-                    }
-                }
-                alertDialog.create()
-                alertDialog.show()
-            }
-        }
+
+
 
         lifecycleScope.launchWhenStarted {
             viewModel.cartProducts.collectLatest {

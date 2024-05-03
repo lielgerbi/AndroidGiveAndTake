@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
-            android:id="@+id/imageCartProduct"
+            android:id="@+id/imgProduct"
             android:layout_width="80dp"
             android:layout_height="75dp"
             android:layout_marginBottom="5dp"
@@ -41,23 +42,22 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/imageCartProduct"
-            app:layout_constraintTop_toTopOf="@id/imageCartProduct"
+            app:layout_constraintStart_toEndOf="@id/imgProduct"
+            app:layout_constraintTop_toTopOf="@id/imgProduct"
             android:lines="1" />
 
 
-
         <TextView
-            android:id="@+id/tvProductCartPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tvProductDescription"
+            android:layout_width="172dp"
+            android:layout_height="34dp"
             android:fontFamily="@font/poppins_light"
             android:text="$50"
             android:textColor="@color/black"
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/tvProductCartName"
-            app:layout_constraintTop_toBottomOf="@id/tvProductCartName"/>
+            app:layout_constraintTop_toBottomOf="@id/tvProductCartName" />
 
 
         <ImageView
@@ -70,41 +70,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageCartProductColor"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="5dp"
-            android:src="@color/g_blue"
-            app:layout_constraintStart_toStartOf="@id/tvProductCartPrice"
-            app:layout_constraintTop_toBottomOf="@id/tvProductCartPrice"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageCartProductSize"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="5dp"
-            android:src="@color/g_blue_gray200"
-            app:layout_constraintStart_toEndOf="@id/imageCartProductColor"
-            app:layout_constraintTop_toTopOf="@id/imageCartProductColor"/>
-
-
-
-        <TextView
-            android:id="@+id/tvCartProductSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="L"
-            android:textSize="11sp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/imageCartProductSize"
-            app:layout_constraintTop_toTopOf="@id/imageCartProductSize"
-            app:layout_constraintStart_toStartOf="@id/imageCartProductSize"
-            app:layout_constraintEnd_toEndOf="@id/imageCartProductSize"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

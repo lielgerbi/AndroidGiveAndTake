@@ -53,7 +53,6 @@ class ProductDetailsFragment : Fragment() {
             tvProductContat.text = product.userEmail
             val decodedImage = decodeBase64ToBitmap(product.imagePath)
             imgProduct.setImageBitmap(decodedImage)
-            //todo - fix
             tvProductDescription.text = product.description
         }
     }

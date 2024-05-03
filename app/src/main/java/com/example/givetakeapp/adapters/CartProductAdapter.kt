@@ -1,5 +1,8 @@
 package com.example.givetakeapp.adapters
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -13,10 +16,14 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductsVi
     inner class CartProductsViewHolder( val binding: CartProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cartProduct: Product) {
+        fun bind(product: Product) {
             binding.apply {
-                tvProductCartName.text = cartProduct.category
+                tvProductCartName.text = product.category
+                tvProductDescription.text = product.description
+                val decodedImage = decodeBase64ToBitmap(product.imagePath)
+                imgProduct.setImageBitmap(decodedImage)
             }
+
         }
     }
 
@@ -31,6 +38,10 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductsVi
     }
 
     val differ = AsyncListDiffer(this, diffCallback)
+    private fun decodeBase64ToBitmap(base64String: String): Bitmap {
+        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartProductsViewHolder {
         return CartProductsViewHolder(
@@ -49,9 +60,9 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductsVi
         }
 
 
-//        holder.binding.imageMinus.setOnClickListener {
-//            onMinusClick?.invoke(cartProduct)
-//        }
+        holder.binding.imageMinus.setOnClickListener {
+            onMinusClick?.invoke(cartProduct)
+        }
     }
 
     override fun getItemCount(): Int {

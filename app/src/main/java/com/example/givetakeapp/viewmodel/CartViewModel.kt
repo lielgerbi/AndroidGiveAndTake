@@ -22,22 +22,6 @@ class CartViewModel @Inject constructor(
         MutableStateFlow<Resource<List<Product>>>(Resource.Unspecified())
     val cartProducts = _cartProducts.asStateFlow()
 
-    private val _deleteDialog = MutableSharedFlow<Product>()
-    val deleteDialog = _deleteDialog.asSharedFlow()
-
-    private var cartProductDocuments = emptyList<DocumentSnapshot>()
-
-
-    fun deleteCartProduct(cartProduct: Product) {
-        val index = cartProducts.value.data?.indexOf(cartProduct)
-        if (index != null && index != -1) {
-//            val documentId = cartProductDocuments[index].id
-//            firestore.collection("user").document(auth.uid!!).collection("cart")
-//                .document(documentId).delete()
-
-        }
-    }
-
 
 
     init {
@@ -59,6 +43,19 @@ class CartViewModel @Inject constructor(
 
         }
 
+    }
+    fun deleteProduct(productToDelete: Product){
+
+        runBlocking {
+            MainApp.database.productDao().deleteProduct(productToDelete.id)
+        }
+        val currentProducts = _cartProducts.value.data ?: return // Exit if data is null
+        val updatedProducts = currentProducts.toMutableList().apply {
+            remove(productToDelete)
+        }
+
+        // Update the _cartProducts MutableStateFlow with the new list of products
+        _cartProducts.value = Resource.Success(updatedProducts)
     }
 
 
