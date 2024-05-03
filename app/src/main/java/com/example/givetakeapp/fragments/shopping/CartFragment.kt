@@ -45,7 +45,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             val b = Bundle().apply {
                 putParcelable("product", it)
             }
-            findNavController().navigate(R.id.action_cartFragment_to_productDetailsFragment, b)
+            findNavController().navigate(R.id.action_cartFragment_to_editProductFragment, b)
         }
 
         cartAdapter.onMinusClick = {

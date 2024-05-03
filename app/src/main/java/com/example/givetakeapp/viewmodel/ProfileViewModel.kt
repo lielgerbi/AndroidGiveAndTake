@@ -22,6 +22,7 @@ class ProfileViewModel @Inject constructor(
     private val _user = MutableStateFlow<Resource<User>>(Resource.Unspecified())
     val user = _user.asStateFlow()
 
+
     init {
         getUser()
     }

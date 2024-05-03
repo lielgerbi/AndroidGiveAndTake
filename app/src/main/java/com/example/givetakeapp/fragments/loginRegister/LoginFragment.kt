@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.givetakeapp.R
-import com.example.givetakeapp.SharedData
+import com.example.givetakeapp.helper.UserManager
 import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.databinding.FragmentLoginBinding
 import com.example.givetakeapp.util.Resource
@@ -22,12 +22,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var  binding: FragmentLoginBinding
     private val viewModel by viewModels<LoginViewModel>()
+    private lateinit var userManager: UserManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater)
+        userManager = UserManager(requireContext())
         return binding.root
     }
 
@@ -55,6 +57,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     }
                     is Resource.Success -> {
                         binding.buttonLoginLogin.revertAnimation()
+                        // Save user authentication status
+                        userManager.saveUserLoggedIn(true)
                         // Change navigation to shopping
                         Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
                             // Make sure pressing back dont go back to login

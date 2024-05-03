@@ -17,8 +17,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.givetakeapp.R
+import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.activities.LoginRegisterActivity
 import com.example.givetakeapp.databinding.FragmentProfileBinding
+import com.example.givetakeapp.helper.UserManager
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.showBottomNavigationView
 import com.example.givetakeapp.viewmodel.ProfileViewModel
@@ -29,13 +31,14 @@ import kotlinx.coroutines.flow.collectLatest
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     val viewModel by viewModels<ProfileViewModel>()
-
+    private lateinit var userManager: UserManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater)
+        userManager = UserManager(requireContext())
         return binding.root
     }
 
@@ -49,6 +52,8 @@ class ProfileFragment : Fragment() {
 
 
         binding.linearLogOut.setOnClickListener {
+            SharedData.myVariable= ""
+            userManager.saveUserLoggedIn(false)
             viewModel.logout()
             val intent = Intent(requireActivity(), LoginRegisterActivity::class.java)
             startActivity(intent)

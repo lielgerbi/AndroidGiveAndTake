@@ -23,8 +23,6 @@ class LoginViewModel @Inject constructor(
 
     fun login(email: String, password: String) {
 
-        //todo - change
-
         SharedData.myVariable = email
 
 
