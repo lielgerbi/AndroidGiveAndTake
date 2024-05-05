@@ -160,6 +160,7 @@ class EditProductFragment : Fragment() {
 
         // Get the product details from args
         val product = args.product
+        imageUrl= product.imagePath
 
         // Set up save button click listener
         binding.buttonSave.setOnClickListener {

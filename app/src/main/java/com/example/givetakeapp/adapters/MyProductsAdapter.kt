@@ -9,21 +9,19 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.givetakeapp.data.Product
-import com.example.givetakeapp.databinding.CartProductItemBinding
+import com.example.givetakeapp.databinding.MyProductItemBinding
 
-class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductsViewHolder>() {
-
-    inner class CartProductsViewHolder( val binding: CartProductItemBinding) :
+class MyProductsAdapter: RecyclerView.Adapter<MyProductsAdapter.MyProductsViewHolder>() {
+    inner class MyProductsViewHolder(val binding: MyProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) {
             binding.apply {
-                tvProductCartName.text = product.category
+                tvMyProductName.text = product.category
                 tvProductDescription.text = product.description
                 val decodedImage = decodeBase64ToBitmap(product.imagePath)
                 imgProduct.setImageBitmap(decodedImage)
             }
-
         }
     }
 
@@ -43,22 +41,21 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductsVi
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartProductsViewHolder {
-        return CartProductsViewHolder(
-            CartProductItemBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyProductsViewHolder {
+        return MyProductsViewHolder(
+            MyProductItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: CartProductsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyProductsViewHolder, position: Int) {
         val cartProduct = differ.currentList[position]
         holder.bind(cartProduct)
 
         holder.itemView.setOnClickListener {
             onProductClick?.invoke(cartProduct)
         }
-
 
         holder.binding.imageMinus.setOnClickListener {
             onMinusClick?.invoke(cartProduct)
@@ -68,11 +65,6 @@ class CartProductAdapter: RecyclerView.Adapter<CartProductAdapter.CartProductsVi
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-
     var onProductClick: ((Product) -> Unit)? = null
     var onMinusClick: ((Product) -> Unit)? = null
-
-
-
-
 }

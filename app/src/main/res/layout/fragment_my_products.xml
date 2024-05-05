@@ -84,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="@id/rightGuideLine"
             app:layout_constraintStart_toStartOf="@id/leftGuideLine"
             app:layout_constraintTop_toBottomOf="@id/progressbarCart"
-            tools:listitem="@layout/cart_product_item" />
+            tools:listitem="@layout/my_product_item" />
 
 
         <com.google.android.material.progressindicator.LinearProgressIndicator

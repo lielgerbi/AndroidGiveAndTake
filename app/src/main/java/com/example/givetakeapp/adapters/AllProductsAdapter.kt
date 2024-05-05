@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.givetakeapp.data.Product
 import com.example.givetakeapp.databinding.ProductRvItemBinding
 
-class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProductsViewHolder>() {
-
-    inner class BestProductsViewHolder(private val binding: ProductRvItemBinding) :
+class AllProductsAdapter : RecyclerView.Adapter<AllProductsAdapter.AllProductsViewHolder>() {
+    inner class AllProductsViewHolder(private val binding: ProductRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
@@ -23,7 +22,6 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
                 val decodedImage = decodeBase64ToBitmap(product.imagePath)
                 imgProduct.setImageBitmap(decodedImage)
             }
-
         }
     }
     private fun decodeBase64ToBitmap(base64String: String): Bitmap {
@@ -31,11 +29,9 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
-
     private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
-
         }
 
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
@@ -45,15 +41,15 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
 
     val differ = AsyncListDiffer(this, diffCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestProductsViewHolder {
-        return BestProductsViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllProductsViewHolder {
+        return AllProductsViewHolder(
             ProductRvItemBinding.inflate(
                 LayoutInflater.from(parent.context)
             )
         )
     }
 
-    override fun onBindViewHolder(holder: BestProductsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AllProductsViewHolder, position: Int) {
         val product = differ.currentList[position]
         holder.bind(product)
 
@@ -67,5 +63,4 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
     }
 
     var onClick: ((Product) -> Unit)? = null
-
 }

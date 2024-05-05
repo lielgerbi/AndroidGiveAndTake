@@ -1,10 +1,9 @@
 package com.example.givetakeapp.data
 
 sealed class Category(val category: String) {
-
-    object Chair: Category("Chair")
-    object Cupboard: Category("Cupboard")
-    object Table: Category("Table")
-    object Accessory: Category("Accessory")
-    object Furniture: Category("Furniture")
+    data object Chair: Category("Chair")
+    data object Cupboard: Category("Cupboard")
+    data object Table: Category("Table")
+    data object Accessory: Category("Accessory")
+    data object Furniture: Category("Furniture")
 }

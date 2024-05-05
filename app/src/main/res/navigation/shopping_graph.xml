@@ -23,7 +23,7 @@
         android:id="@+id/cartFragment"
         android:name="com.example.givetakeapp.fragments.shopping.CartFragment"
         android:label="CartFragment"
-        tools:layout="@layout/fragment_cart">
+        tools:layout="@layout/fragment_my_products">
         <action
             android:id="@+id/action_cartFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />

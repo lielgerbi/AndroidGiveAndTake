@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.givetakeapp.R
-import com.example.givetakeapp.activities.ShoppingActivity
-import com.example.givetakeapp.adapters.HomeViewpagerAdapter
+import com.example.givetakeapp.adapters.HomeViewPagerAdapter
 import com.example.givetakeapp.databinding.FragmentHomeBinding
 import com.example.givetakeapp.fragments.categories.AccessoryFragment
 import com.example.givetakeapp.fragments.categories.ChairFragment
@@ -44,7 +43,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.viewpagerHome.isUserInputEnabled = false
 
         val viewPager2Adapter =
-            HomeViewpagerAdapter(categoriesFragments, childFragmentManager, lifecycle)
+            HomeViewPagerAdapter(categoriesFragments, childFragmentManager, lifecycle)
         binding.viewpagerHome.adapter = viewPager2Adapter
         TabLayoutMediator(binding.tabLayout, binding.viewpagerHome) { tab, position ->
             when (position) {

@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.givetakeapp.R
-import com.example.givetakeapp.adapters.BestProductsAdapter
+import com.example.givetakeapp.adapters.AllProductsAdapter
 import com.example.givetakeapp.databinding.FragmentMainCategoryBinding
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.showBottomNavigationView
@@ -27,7 +27,7 @@ private val TAG = "MainCategoryFragment"
 class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
 
     private lateinit var binding: FragmentMainCategoryBinding
-    private lateinit var bestProductsAdapter: BestProductsAdapter
+    private lateinit var allProductsAdapter: AllProductsAdapter
     private val viewModel by viewModels<MainCategoryViewModel>()
 
     override fun onCreateView(
@@ -43,7 +43,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         super.onViewCreated(view, savedInstanceState)
         setupBestProducts()
 
-        bestProductsAdapter.onClick = {
+        allProductsAdapter.onClick = {
             val b = Bundle().apply { putParcelable("product",it) }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
         }
@@ -55,7 +55,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                         binding.bestProductsProgressbar.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
-                        bestProductsAdapter.differ.submitList(it.data)
+                        allProductsAdapter.differ.submitList(it.data)
                         binding.bestProductsProgressbar.visibility = View.GONE
 
 
@@ -78,11 +78,11 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         })
     }
     private fun setupBestProducts() {
-        bestProductsAdapter = BestProductsAdapter()
+        allProductsAdapter = AllProductsAdapter()
         binding.rvBestProducts.apply {
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            adapter = bestProductsAdapter
+            adapter = allProductsAdapter
         }
     }
     private fun hideLoading() {

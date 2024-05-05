@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.givetakeapp.data.Category
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.viewmodel.CategoryViewModel
-import com.example.givetakeapp.viewmodel.BaseCategoryViewModelFactoryFactory
+import com.example.givetakeapp.viewmodel.BaseCategoryViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -18,26 +18,26 @@ class TableFragment: BaseCategoryFragment() {
 
 
     val viewModel by viewModels<CategoryViewModel> {
-        BaseCategoryViewModelFactoryFactory(Category.Table)
+        BaseCategoryViewModelFactory(Category.Table)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launchWhenStarted {
-            viewModel.bestProducts.collectLatest {
+            viewModel.allProducts.collectLatest {
                 when (it) {
                     is Resource.Loading -> {
-                        showBestProductsLoading()
+                        showAllProductsLoading()
                     }
                     is Resource.Success -> {
-                        bestProductsAdapter.differ.submitList(it.data)
-                        hideBestProductsLoading()
+                        allProductsAdapter.differ.submitList(it.data)
+                        hideAllProductsLoading()
                     }
                     is Resource.Error -> {
                         Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_LONG)
                             .show()
-                        hideBestProductsLoading()
+                        hideAllProductsLoading()
                     }
                     else -> Unit
                 }
@@ -45,7 +45,7 @@ class TableFragment: BaseCategoryFragment() {
         }
     }
 
-    override fun onBestProductsPagingRequest() {
+    override fun onAllProductsPagingRequest() {
 
     }
 

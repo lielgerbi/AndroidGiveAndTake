@@ -9,14 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.givetakeapp.R
-import com.example.givetakeapp.adapters.BestProductsAdapter
+import com.example.givetakeapp.adapters.AllProductsAdapter
 import com.example.givetakeapp.databinding.FragmentBaseCategoryBinding
 import com.example.givetakeapp.util.showBottomNavigationView
 
 open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
     private lateinit var binding: FragmentBaseCategoryBinding
-    protected val offerAdapter: BestProductsAdapter by lazy { BestProductsAdapter() }
-    protected val  bestProductsAdapter: BestProductsAdapter by lazy { BestProductsAdapter() }
+    protected val  allProductsAdapter: AllProductsAdapter by lazy { AllProductsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +31,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 
         setupBestProductsRv()
 
-        bestProductsAdapter.onClick = {
+        allProductsAdapter.onClick = {
             val b = Bundle().apply { putParcelable("product",it) }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
         }
@@ -40,7 +39,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 
         binding.nestedScrollBaseCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{ v, _, scrollY, _, _ ->
             if (v.getChildAt(0).bottom <= v.height + scrollY){
-                onBestProductsPagingRequest()
+                onAllProductsPagingRequest()
             }
         })
     }
@@ -48,16 +47,16 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 
 
 
-    fun showBestProductsLoading(){
+    fun showAllProductsLoading(){
         binding.bestProductsProgressBar.visibility = View.VISIBLE
     }
 
-    fun hideBestProductsLoading(){
+    fun hideAllProductsLoading(){
         binding.bestProductsProgressBar.visibility = View.GONE
     }
 
 
-    open fun onBestProductsPagingRequest(){
+    open fun onAllProductsPagingRequest(){
 
     }
 
@@ -65,7 +64,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         binding.rvBestProducts.apply {
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            adapter = bestProductsAdapter
+            adapter = allProductsAdapter
         }
     }
 

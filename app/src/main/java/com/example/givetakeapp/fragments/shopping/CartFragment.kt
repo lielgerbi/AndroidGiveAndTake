@@ -1,6 +1,5 @@
 package com.example.givetakeapp.fragments.shopping
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,17 +12,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.givetakeapp.R
-import com.example.givetakeapp.adapters.CartProductAdapter
-import com.example.givetakeapp.databinding.FragmentCartBinding
+import com.example.givetakeapp.adapters.MyProductsAdapter
+import com.example.givetakeapp.databinding.FragmentMyProductsBinding
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.VerticalItemDecoration
 import com.example.givetakeapp.viewmodel.CartViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.runBlocking
 
-class CartFragment : Fragment(R.layout.fragment_cart) {
-    private lateinit var binding: FragmentCartBinding
-    private val cartAdapter by lazy { CartProductAdapter() }
+class CartFragment : Fragment(R.layout.fragment_my_products) {
+    private lateinit var binding: FragmentMyProductsBinding
+    private val cartAdapter by lazy { MyProductsAdapter() }
     private val viewModel by activityViewModels<CartViewModel>()
 
     override fun onCreateView(
@@ -31,7 +29,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCartBinding.inflate(inflater)
+        binding = FragmentMyProductsBinding.inflate(inflater)
         return binding.root
     }
 

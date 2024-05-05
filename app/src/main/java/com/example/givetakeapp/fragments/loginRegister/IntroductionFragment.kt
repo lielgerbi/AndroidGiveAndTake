@@ -43,7 +43,7 @@ class IntroductionFragment:Fragment(R.layout.fragment_introdcution) {
         else{
             binding.buttonStart.setOnClickListener {
                 findNavController().navigate(R.id.action_introductionFragment_to_accountOptionsFragment2)
-           }
+            }
         }
 
     }

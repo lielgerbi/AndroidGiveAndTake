@@ -11,6 +11,7 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,9 +33,8 @@ import kotlinx.coroutines.flow.collectLatest
 class UserAccountFragment : Fragment() {
     private lateinit var binding: FragmentUserAccountBinding
     private val viewModel by viewModels<UserAccountViewModel>()
-    private lateinit var imageActivityResultLauncher: ActivityResultLauncher<Intent>
-
-    private var imageUri: Uri? = null
+    private var imageUrl: String = ""
+    private lateinit var imageUser: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +101,10 @@ class UserAccountFragment : Fragment() {
                 val user = User(
                     edEmail.text.toString().trim(),
                     edFirstName.text.toString().trim(),
-                    edLastName.text.toString().trim()
+                    edLastName.text.toString().trim(),
+                    imageUrl
+
+
                 )
                 viewModel.updateUser(user)
                 findNavController().navigate(R.id.action_userAccountFragment_to_homeFragment)
@@ -123,6 +126,7 @@ class UserAccountFragment : Fragment() {
     }
 
     private fun showUserInformation(data: User) {
+        imageUrl = data.imagePath
         binding.apply {
             Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(data.imagePath)).error(ColorDrawable(Color.BLACK)).into(imageUser)
             edFirstName.setText(data.firstName)
