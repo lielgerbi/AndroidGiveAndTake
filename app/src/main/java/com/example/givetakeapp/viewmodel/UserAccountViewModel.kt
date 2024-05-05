@@ -40,8 +40,6 @@ class UserAccountViewModel @Inject constructor(
         }
         viewModelScope.launch {
             runBlocking {
-               // user = MainApp.database.userDao().getAllUsers()
-
                 user = MainApp.database.userDao().getUserByEmail(SharedData.myVariable)
             }
 
@@ -79,12 +77,6 @@ class UserAccountViewModel @Inject constructor(
 
     }
 
-    private fun saveUserInformationWithNewImage(user: User, imageUri: Uri) {
 
-    }
-
-    private fun saveUserInformation(user: User, shouldRetrievedOldImage: Boolean) {
-
-    }
 
 }

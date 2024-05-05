@@ -141,7 +141,6 @@ class UserAccountFragment : Fragment() {
             edFirstName.visibility = View.VISIBLE
             edLastName.visibility = View.VISIBLE
             edEmail.visibility = View.VISIBLE
-            tvUpdatePassword.visibility = View.VISIBLE
             buttonSave.visibility = View.VISIBLE
         }
     }
@@ -153,7 +152,6 @@ class UserAccountFragment : Fragment() {
             edFirstName.visibility = View.INVISIBLE
             edLastName.visibility = View.INVISIBLE
             edEmail.visibility = View.INVISIBLE
-            tvUpdatePassword.visibility = View.INVISIBLE
             buttonSave.visibility = View.INVISIBLE
         }
     }

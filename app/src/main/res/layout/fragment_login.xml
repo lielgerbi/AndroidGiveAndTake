@@ -25,7 +25,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Kleine."/>
+            android:text='Give &amp; Take.'/>
 
         <TextView
             android:id="@+id/tvLetsLogin"

@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:fontFamily="@font/poppins_light"
-                    android:text="My Cart"
+                    android:text="My Products"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@id/imageCloseCart"

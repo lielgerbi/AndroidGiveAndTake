@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -33,6 +34,7 @@ import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -41,7 +43,8 @@ import java.net.URL
 class EditProductFragment : Fragment() {
     private val args by navArgs<ProductDetailsFragmentArgs>()
     private lateinit var binding: FragmentEditProductBinding
-    private var imageUrl: String? = null
+    private var imageUrl: String = ""
+    private lateinit var imageProduct: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -125,28 +128,27 @@ class EditProductFragment : Fragment() {
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, EditProductFragment.PICK_IMAGE_REQUEST)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EditProductFragment.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri = data.data
             selectedImageUri?.let { uri ->
                 val inputStream = requireContext().contentResolver.openInputStream(uri)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imageUrl = bitmapToBase64(bitmap)
-                binding.apply {Glide.with(this@EditProductFragment).load(decodeBase64ToBitmap(
-                    imageUrl!!
-                )).error(
-                    ColorDrawable(Color.BLACK)
-                ).into(imageProduct)}
-
+                println(imageUrl)
+                imageProduct.setImageBitmap(bitmap)
             }
         }
     }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        imageProduct = view.findViewById(R.id.imageProduct)
 
         // Fetch cities and populate the spinner
         FetchCitiesTask().execute()
@@ -202,7 +204,7 @@ class EditProductFragment : Fragment() {
             userEmail = contant, // Set the user's email
             city = city, // Set the city
             description= description,
-            imagePath = args.product.imagePath
+            imagePath = imageUrl
         )
         saveProduct(product)
 

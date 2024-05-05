@@ -45,12 +45,15 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //navigate to the profile page when click on profile
         binding.constraintProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_userAccountFragment)
         }
-
-
-
+        //navigate to the user products page when click on my products
+        binding.linearAllProduct.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_cartFragment)
+        }
+        //when click on logout delete connected user data and navigate to introduction page
         binding.linearLogOut.setOnClickListener {
             SharedData.myVariable= ""
             userManager.saveUserLoggedIn(false)

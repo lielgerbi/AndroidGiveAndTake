@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_profileFragment_to_userAccountFragment"
             app:destination="@id/userAccountFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"

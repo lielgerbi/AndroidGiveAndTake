@@ -95,31 +95,31 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tvOrders"
+                android:id="@+id/tvProducts"
                 style="@style/MediumTextViewThin"
                 android:textColor="@color/g_gray700"
                 android:textStyle="normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Orders"
+                android:text="Products"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintTop_toBottomOf="@id/constraintProfile" />
 
 
             <LinearLayout
-                android:id="@+id/linearOrders"
+                android:id="@+id/linearProducts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/tvOrders"
+                app:layout_constraintTop_toBottomOf="@id/tvProducts"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/search_box_background">
 
                 <LinearLayout
-                    android:id="@+id/linearAllOrders"
+                    android:id="@+id/linearAllProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -133,7 +133,7 @@
                         app:tint="@color/white" />
 
                     <TextView
-                        android:id="@+id/tvAllOrders"
+                        android:id="@+id/tvAllProducts"
                         style="@style/MediumTextViewThin"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -157,17 +157,7 @@
 
 
 
-            <TextView
-                android:id="@+id/tvNotifications"
-                style="@style/MediumTextViewThin"
-                android:textColor="@color/g_gray700"
-                android:textStyle="normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Notifications"
-                app:layout_constraintStart_toStartOf="@id/guideline1"
-                app:layout_constraintTop_toBottomOf="@id/linearOrders" />
+
 
             <LinearLayout
                 android:id="@+id/linearNotifications"
@@ -175,24 +165,22 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/tvNotifications"
+                app:layout_constraintTop_toBottomOf="@id/tvProducts"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/search_box_background"/>
 
 
-
             <TextView
                 android:id="@+id/tvRegional"
                 style="@style/MediumTextViewThin"
-                android:textColor="@color/g_gray700"
-                android:textStyle="normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Regional"
+                android:textColor="@color/g_gray700"
+                android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
-                app:layout_constraintTop_toBottomOf="@id/linearNotifications" />
+                app:layout_constraintTop_toBottomOf="@+id/linearProducts" />
 
             <LinearLayout
                 android:background="@drawable/search_box_background"
@@ -247,19 +235,6 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tvVersion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/sf_pro_display"
-                android:text="Version 1.0"
-                android:textColor="@color/g_gray700"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guideline2"
-                app:layout_constraintStart_toStartOf="@id/guideline1"
-                app:layout_constraintTop_toBottomOf="@+id/linear_regional" />
 
 
 
