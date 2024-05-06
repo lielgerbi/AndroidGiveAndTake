@@ -1,5 +1,6 @@
 package com.example.givetakeapp.fragments.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -23,17 +25,19 @@ import com.bumptech.glide.Glide
 import com.example.givetakeapp.R
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.databinding.FragmentUserAccountBinding
+import com.example.givetakeapp.fragments.loginRegister.RegisterFragment
 //import com.example.givetakeapp.dialog.setupBottomSheetDialog
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.viewmodel.UserAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
 class UserAccountFragment : Fragment() {
     private lateinit var binding: FragmentUserAccountBinding
     private val viewModel by viewModels<UserAccountViewModel>()
-    private var imageUrl: String = ""
+    private var imageStr: String = ""
     private lateinit var imageUser: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,39 +98,50 @@ class UserAccountFragment : Fragment() {
                 }
             }
         }
-
-
+        binding.buttonImagesPicker.setOnClickListener {
+            openImagePicker()
+        }
         binding.apply {
             buttonSave.setOnClickListener {
                 val user = User(
                     edEmail.text.toString().trim(),
                     edFirstName.text.toString().trim(),
                     edLastName.text.toString().trim(),
-                    imageUrl
-
-
+                    imageStr
                 )
                 viewModel.updateUser(user)
                 findNavController().navigate(R.id.action_userAccountFragment_to_homeFragment)
             }
         }
-//        binding.buttonSave.setOnClickListener {
-//            binding.apply {
-//                val firstName = edFirstName.text.toString().trim()
-//                val lastName = edLastName.text.toString().trim()
-//                val email = edEmail.text.toString().trim()
-//                val user = User(email, firstName , lastName)
-//                viewModel.updateUser(user)
-//            }
-//            //findNavController().navigate(R.id.action_userAccountFragment_to_homeFragment)
-//        }
+    }
 
-
-
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri = data.data
+            selectedImageUri?.let { uri ->
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                imageStr = bitmapToBase64(bitmap)
+                //to do - show the image when change
+               // Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
+            }
+        }
+    }
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        val byteArray = outputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
     private fun showUserInformation(data: User) {
-        imageUrl = data.imagePath
+        imageStr = data.imagePath
         binding.apply {
             Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(data.imagePath)).error(ColorDrawable(Color.BLACK)).into(imageUser)
             edFirstName.setText(data.firstName)
@@ -158,5 +173,8 @@ class UserAccountFragment : Fragment() {
             edEmail.visibility = View.INVISIBLE
             buttonSave.visibility = View.INVISIBLE
         }
+    }
+    companion object {
+        private const val PICK_IMAGE_REQUEST = 1
     }
 }
