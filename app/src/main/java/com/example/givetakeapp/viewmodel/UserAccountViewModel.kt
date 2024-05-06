@@ -1,12 +1,10 @@
 package com.example.givetakeapp.viewmodel
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.givetakeapp.MainApp
 import com.example.givetakeapp.SharedData
-import com.example.givetakeapp.data.Product
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.util.RegisterValidation
 import com.example.givetakeapp.util.Resource
@@ -24,16 +22,15 @@ class UserAccountViewModel @Inject constructor(
 ) : AndroidViewModel(app) {
 
     private val _user = MutableStateFlow<Resource<User>>(Resource.Unspecified())
-    val user = _user.asStateFlow()
-
     private val _updateInfo = MutableStateFlow<Resource<User>>(Resource.Unspecified())
+    val user = _user.asStateFlow()
     val updateInfo = _updateInfo.asStateFlow()
 
     init {
         getUser()
     }
 
-    fun getUser() {
+    private fun getUser() {
         var user: User;
         viewModelScope.launch {
             _user.emit(Resource.Loading())
@@ -45,8 +42,6 @@ class UserAccountViewModel @Inject constructor(
 
             _user.emit(Resource.Success(user))
         }
-
-
     }
 
     fun updateUser(user: User) {
@@ -71,12 +66,8 @@ class UserAccountViewModel @Inject constructor(
 
                 MainApp.database.userDao().insertUser(user)
             }
-            SharedData.myVariable =user.email
+            SharedData.myVariable = user.email
             _updateInfo.emit(Resource.Success(user))
         }
-
     }
-
-
-
 }

@@ -28,14 +28,11 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupBestProductsRv()
-
         allProductsAdapter.onClick = {
             val b = Bundle().apply { putParcelable("product",it) }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
         }
-
 
         binding.nestedScrollBaseCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{ v, _, scrollY, _, _ ->
             if (v.getChildAt(0).bottom <= v.height + scrollY){
@@ -43,9 +40,6 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
             }
         })
     }
-
-
-
 
     fun showAllProductsLoading(){
         binding.bestProductsProgressBar.visibility = View.VISIBLE
@@ -55,9 +49,7 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         binding.bestProductsProgressBar.visibility = View.GONE
     }
 
-
     open fun onAllProductsPagingRequest(){
-
     }
 
     private fun setupBestProductsRv() {
@@ -68,10 +60,8 @@ open class BaseCategoryFragment: Fragment(R.layout.fragment_base_category) {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         showBottomNavigationView()
     }
-
 }

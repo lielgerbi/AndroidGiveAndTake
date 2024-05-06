@@ -1,9 +1,7 @@
 package com.example.givetakeapp.viewmodel
 
-import android.text.BoringLayout
 import androidx.lifecycle.ViewModel
 import com.example.givetakeapp.MainApp
-import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.util.RegisterFieldState
 import com.example.givetakeapp.util.RegisterValidation
@@ -23,9 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-): ViewModel() {
+) : ViewModel() {
     private val _register = MutableStateFlow<Resource<FirebaseUser>>(Resource.Unspecified())
-    val register : Flow<Resource<FirebaseUser>> = _register
+    val register: Flow<Resource<FirebaseUser>> = _register
 
     private val _validation = Channel<RegisterFieldState>()
     val validation = _validation.receiveAsFlow()
@@ -56,7 +54,6 @@ class RegisterViewModel @Inject constructor(
 
     private fun saveUser(user: User) {
         runBlocking {
-
             MainApp.database.productDao().deleteAllProducts()
             MainApp.database.userDao().insertUser(user)
         }

@@ -42,6 +42,5 @@ class ChairFragment: BaseCategoryFragment() {
     }
 
     override fun onAllProductsPagingRequest() {
-
     }
 }

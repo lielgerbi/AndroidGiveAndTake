@@ -25,7 +25,6 @@ private val TAG = "MainCategoryFragment"
 
 @AndroidEntryPoint
 class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
-
     private lateinit var binding: FragmentMainCategoryBinding
     private lateinit var allProductsAdapter: AllProductsAdapter
     private val viewModel by viewModels<MainCategoryViewModel>()
@@ -49,7 +48,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.bestProducts.collectLatest {
+            viewModel.allProducts.collectLatest {
                 when (it) {
                     is Resource.Loading -> {
                         binding.bestProductsProgressbar.visibility = View.VISIBLE
@@ -57,14 +56,11 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                     is Resource.Success -> {
                         allProductsAdapter.differ.submitList(it.data)
                         binding.bestProductsProgressbar.visibility = View.GONE
-
-
                     }
                     is Resource.Error -> {
                         Log.e(TAG, it.message.toString())
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         binding.bestProductsProgressbar.visibility = View.GONE
-
                     }
                     else -> Unit
                 }
@@ -73,7 +69,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
 
         binding.nestedScrollMainCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             if (v.getChildAt(0).bottom <= v.height + scrollY) {
-                viewModel.fetchBestProducts()
+                viewModel.fetchAllProducts()
             }
         })
     }
@@ -91,12 +87,9 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
 
     private fun showLoading() {
         binding.mainCategoryProgressbar.visibility = View.VISIBLE
-
     }
     override fun onResume() {
         super.onResume()
-
         showBottomNavigationView()
     }
-
 }

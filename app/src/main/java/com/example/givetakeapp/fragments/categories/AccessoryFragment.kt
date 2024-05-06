@@ -18,7 +18,6 @@ class AccessoryFragment: BaseCategoryFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         lifecycleScope.launchWhenStarted {
             viewModel.allProducts.collectLatest {
                 when (it) {
@@ -39,7 +38,6 @@ class AccessoryFragment: BaseCategoryFragment() {
             }
         }
     }
-
     override fun onAllProductsPagingRequest() {
     }
 }

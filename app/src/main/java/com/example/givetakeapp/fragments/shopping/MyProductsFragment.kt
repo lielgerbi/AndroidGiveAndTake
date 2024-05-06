@@ -16,13 +16,13 @@ import com.example.givetakeapp.adapters.MyProductsAdapter
 import com.example.givetakeapp.databinding.FragmentMyProductsBinding
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.VerticalItemDecoration
-import com.example.givetakeapp.viewmodel.CartViewModel
+import com.example.givetakeapp.viewmodel.MyProductsViewModel
 import kotlinx.coroutines.flow.collectLatest
 
-class CartFragment : Fragment(R.layout.fragment_my_products) {
+class MyProductsFragment : Fragment(R.layout.fragment_my_products) {
     private lateinit var binding: FragmentMyProductsBinding
-    private val cartAdapter by lazy { MyProductsAdapter() }
-    private val viewModel by activityViewModels<CartViewModel>()
+    private val myProductsAdapter by lazy { MyProductsAdapter() }
+    private val viewModel by activityViewModels<MyProductsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,49 +35,44 @@ class CartFragment : Fragment(R.layout.fragment_my_products) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupMyProductsRv()
 
-        setupCartRv()
-
-
-        cartAdapter.onProductClick = {
+        myProductsAdapter.onProductClick = {
             val b = Bundle().apply {
                 putParcelable("product", it)
             }
-            findNavController().navigate(R.id.action_cartFragment_to_editProductFragment, b)
+            findNavController().navigate(R.id.action_myProductsFragment_to_editProductFragment, b)
         }
 
-        cartAdapter.onMinusClick = {
+        myProductsAdapter.onMinusClick = {
             viewModel.deleteProduct(it)
-            findNavController().navigate(R.id.action_cartFragment_to_homeFragment)
+            findNavController().navigate(R.id.action_myProductsFragment_to_homeFragment)
         }
-
-
-
-
-
-
 
         lifecycleScope.launchWhenStarted {
-            viewModel.cartProducts.collectLatest {
+            viewModel.myProducts.collectLatest {
                 when (it) {
                     is Resource.Loading -> {
-                        binding.progressbarCart.visibility = View.VISIBLE
+                        binding.progressbarMyProducts.visibility = View.VISIBLE
                     }
+
                     is Resource.Success -> {
-                        binding.progressbarCart.visibility = View.INVISIBLE
+                        binding.progressbarMyProducts.visibility = View.INVISIBLE
                         if (it.data!!.isEmpty()) {
-                            showEmptyCart()
+                            showEmptyMyProducts()
                             hideOtherViews()
                         } else {
-                            hideEmptyCart()
+                            hideEmptyMyProducts()
                             showOtherViews()
-                            cartAdapter.differ.submitList(it.data)
+                            myProductsAdapter.differ.submitList(it.data)
                         }
                     }
+
                     is Resource.Error -> {
-                        binding.progressbarCart.visibility = View.INVISIBLE
+                        binding.progressbarMyProducts.visibility = View.INVISIBLE
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -86,32 +81,32 @@ class CartFragment : Fragment(R.layout.fragment_my_products) {
 
     private fun showOtherViews() {
         binding.apply {
-            rvCart.visibility = View.VISIBLE
+            rvMyProducts.visibility = View.VISIBLE
         }
     }
 
     private fun hideOtherViews() {
         binding.apply {
-            rvCart.visibility = View.GONE
+            rvMyProducts.visibility = View.GONE
         }
     }
 
-    private fun hideEmptyCart() {
+    private fun hideEmptyMyProducts() {
         binding.apply {
-            layoutCartEmpty.visibility = View.GONE
+            layoutMyProductsEmpty.visibility = View.GONE
         }
     }
 
-    private fun showEmptyCart() {
+    private fun showEmptyMyProducts() {
         binding.apply {
-            layoutCartEmpty.visibility = View.VISIBLE
+            layoutMyProductsEmpty.visibility = View.VISIBLE
         }
     }
 
-    private fun setupCartRv() {
-        binding.rvCart.apply {
+    private fun setupMyProductsRv() {
+        binding.rvMyProducts.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = cartAdapter
+            adapter = myProductsAdapter
             addItemDecoration(VerticalItemDecoration())
         }
     }

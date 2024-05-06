@@ -13,20 +13,15 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-): ViewModel() {
+) : ViewModel() {
     private val _login = MutableSharedFlow<Resource<FirebaseUser>>()
     val login = _login.asSharedFlow()
 
     fun login(email: String, password: String) {
-
         SharedData.myVariable = email
-
-
-
 
         viewModelScope.launch {
             _login.emit(Resource.Loading())
@@ -40,7 +35,7 @@ class LoginViewModel @Inject constructor(
                 }
             }.addOnFailureListener {
                 viewModelScope.launch {
-                   _login.emit(Resource.Error(it.message.toString()))
+                    _login.emit(Resource.Error(it.message.toString()))
                 }
             }
     }

@@ -42,6 +42,5 @@ class CupboardFragment: BaseCategoryFragment() {
     }
 
     override fun onAllProductsPagingRequest() {
-
     }
 }

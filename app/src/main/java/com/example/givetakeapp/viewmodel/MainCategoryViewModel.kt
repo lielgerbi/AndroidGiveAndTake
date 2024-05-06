@@ -1,6 +1,5 @@
 package com.example.givetakeapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.givetakeapp.MainApp
@@ -17,37 +16,36 @@ import javax.inject.Inject
 class MainCategoryViewModel @Inject constructor(
 ) : ViewModel() {
 
-
-    private val _bestProducts = MutableStateFlow<Resource<List<Product>>>(Resource.Unspecified())
-    val bestProducts: StateFlow<Resource<List<Product>>> = _bestProducts
-
+    private val _allProducts = MutableStateFlow<Resource<List<Product>>>(Resource.Unspecified())
     private val pagingInfo = PagingInfo()
+    val allProducts: StateFlow<Resource<List<Product>>> = _allProducts
 
     init {
-        fetchBestProducts()
+        fetchAllProducts()
     }
-    fun fetchBestProducts() {
+
+    fun fetchAllProducts() {
         var allProducts: List<Product>;
-       if (!pagingInfo.isPagingEnd) {
+        if (!pagingInfo.isPagingEnd) {
             viewModelScope.launch {
-                _bestProducts.emit(Resource.Loading())
+                _allProducts.emit(Resource.Loading())
                 runBlocking {
-                     //Retrieve all products from the database
-                     allProducts = MainApp.database.productDao().getAllProducts()
+                    //Retrieve all products from the database
+                    allProducts = MainApp.database.productDao().getAllProducts()
                 }
-                pagingInfo.isPagingEnd = allProducts == pagingInfo.oldBestProducts
-                pagingInfo.oldBestProducts = allProducts
+                pagingInfo.isPagingEnd = allProducts == pagingInfo.oldAllProducts
+                pagingInfo.oldAllProducts = allProducts
                 viewModelScope.launch {
-                    _bestProducts.emit(Resource.Success(allProducts))
+                    _allProducts.emit(Resource.Success(allProducts))
                 }
-                pagingInfo.bestProductsPage++
+                pagingInfo.allProductsPage++
             }
         }
     }
 }
 
 internal data class PagingInfo(
-    var bestProductsPage: Long = 1,
-    var oldBestProducts: List<Product> = emptyList(),
+    var allProductsPage: Long = 1,
+    var oldAllProducts: List<Product> = emptyList(),
     var isPagingEnd: Boolean = false
 )

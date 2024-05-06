@@ -12,7 +12,7 @@
 
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarCart"
+            android:id="@+id/toolbarMyProducts"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
 
 
                 <ImageView
-                    android:id="@+id/imageCloseCart"
+                    android:id="@+id/imageCloseMyProducts"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:scaleType="centerInside"
@@ -45,9 +45,9 @@
                     android:text="My Products"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@id/imageCloseCart"
-                    app:layout_constraintStart_toStartOf="@id/imageCloseCart"
-                    app:layout_constraintTop_toTopOf="@id/imageCloseCart" />
+                    app:layout_constraintBottom_toBottomOf="@id/imageCloseMyProducts"
+                    app:layout_constraintStart_toStartOf="@id/imageCloseMyProducts"
+                    app:layout_constraintTop_toTopOf="@id/imageCloseMyProducts" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -76,30 +76,30 @@
             app:layout_constraintGuide_percent="0.68" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCart"
+            android:id="@+id/rvMyProducts"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/rightGuideLine"
             app:layout_constraintStart_toStartOf="@id/leftGuideLine"
-            app:layout_constraintTop_toBottomOf="@id/progressbarCart"
+            app:layout_constraintTop_toBottomOf="@id/progressbarMyProducts"
             tools:listitem="@layout/my_product_item" />
 
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progressbarCart"
+            android:id="@+id/progressbarMyProducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbarCart" />
+            app:layout_constraintTop_toBottomOf="@id/toolbarMyProducts" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_cart_empty"
+            android:id="@+id/layout_my_products_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">

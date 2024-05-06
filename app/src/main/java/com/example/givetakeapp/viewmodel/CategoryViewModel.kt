@@ -1,6 +1,5 @@
 package com.example.givetakeapp.viewmodel
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.givetakeapp.MainApp
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class CategoryViewModel constructor(
+class CategoryViewModel(
     private val category: Category
 ) : ViewModel() {
 
@@ -29,7 +28,8 @@ class CategoryViewModel constructor(
             _allProducts.emit(Resource.Loading())
             runBlocking {
                 // Retrieve all products from the database
-                allProducts = MainApp.database.productDao().getAllProductsByCategory(category.category)
+                allProducts =
+                    MainApp.database.productDao().getAllProductsByCategory(category.category)
             }
             viewModelScope.launch {
                 _allProducts.emit(Resource.Success(allProducts))

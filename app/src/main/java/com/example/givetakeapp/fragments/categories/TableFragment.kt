@@ -46,7 +46,5 @@ class TableFragment: BaseCategoryFragment() {
     }
 
     override fun onAllProductsPagingRequest() {
-
     }
-
 }

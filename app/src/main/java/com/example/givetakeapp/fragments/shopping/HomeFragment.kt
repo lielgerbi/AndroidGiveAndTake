@@ -16,7 +16,7 @@ import com.example.givetakeapp.fragments.categories.MainCategoryFragment
 import com.example.givetakeapp.fragments.categories.TableFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeFragment: Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -39,7 +39,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             AccessoryFragment(),
             FurnitureFragment()
         )
-
         binding.viewpagerHome.isUserInputEnabled = false
 
         val viewPager2Adapter =
@@ -56,6 +55,4 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }.attach()
     }
-
-
 }

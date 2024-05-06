@@ -22,30 +22,24 @@ class ProfileViewModel @Inject constructor(
     private val _user = MutableStateFlow<Resource<User>>(Resource.Unspecified())
     val user = _user.asStateFlow()
 
-
     init {
         getUser()
     }
 
-    fun getUser() {
+    private fun getUser() {
         var user: User;
         viewModelScope.launch {
             _user.emit(Resource.Loading())
         }
         viewModelScope.launch {
             runBlocking {
-                // user = MainApp.database.userDao().getAllUsers()
                 user = MainApp.database.userDao().getUserByEmail(SharedData.myVariable)
             }
-
             _user.emit(Resource.Success(user))
         }
-
-
     }
 
-    fun logout(){
+    fun logout() {
         auth.signOut()
     }
-
 }

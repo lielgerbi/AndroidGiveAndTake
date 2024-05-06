@@ -13,8 +13,7 @@ import com.example.givetakeapp.databinding.FragmentIntrodcutionBinding
 import com.example.givetakeapp.helper.UserManager
 import com.example.givetakeapp.SharedData
 
-
-class IntroductionFragment:Fragment(R.layout.fragment_introdcution) {
+class IntroductionFragment : Fragment(R.layout.fragment_introdcution) {
     private lateinit var binding: FragmentIntrodcutionBinding
     private lateinit var userManager: UserManager
 
@@ -22,7 +21,7 @@ class IntroductionFragment:Fragment(R.layout.fragment_introdcution) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentIntrodcutionBinding.inflate(inflater)
         userManager = UserManager(requireContext())
         return binding.root
@@ -30,21 +29,18 @@ class IntroductionFragment:Fragment(R.layout.fragment_introdcution) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (userManager.isUserLoggedIn()){
-            SharedData.myVariable =userManager.getUserEmail().toString()
+        if (userManager.isUserLoggedIn()) {
+            SharedData.myVariable = userManager.getUserEmail().toString()
             // Change navigation to shopping
             Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
                 // Make sure pressing back dont go back to login
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
-
-        }
-        else{
+        } else {
             binding.buttonStart.setOnClickListener {
                 findNavController().navigate(R.id.action_introductionFragment_to_accountOptionsFragment2)
             }
         }
-
     }
 }

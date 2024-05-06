@@ -1,5 +1,6 @@
 package com.example.givetakeapp.fragments.settings
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -68,13 +69,16 @@ class UserAccountFragment : Fragment() {
                     is Resource.Loading -> {
                         showUserLoading()
                     }
+
                     is Resource.Success -> {
                         hideUserLoading()
                         showUserInformation(it.data!!)
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -86,14 +90,17 @@ class UserAccountFragment : Fragment() {
                     is Resource.Loading -> {
                         binding.buttonSave.startAnimation()
                     }
+
                     is Resource.Success -> {
                         binding.buttonSave.revertAnimation()
                         //findNavController().navigateUp()
                     }
+
                     is Resource.Error -> {
                         binding.buttonSave.revertAnimation()
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
+
                     else -> Unit
                 }
             }
@@ -115,11 +122,13 @@ class UserAccountFragment : Fragment() {
         }
     }
 
+    @SuppressLint("IntentReset")
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
@@ -129,10 +138,11 @@ class UserAccountFragment : Fragment() {
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imageStr = bitmapToBase64(bitmap)
                 //to do - show the image when change
-               // Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
+                // Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
             }
         }
     }
+
     private fun bitmapToBase64(bitmap: Bitmap): String {
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
@@ -143,16 +153,19 @@ class UserAccountFragment : Fragment() {
     private fun showUserInformation(data: User) {
         imageStr = data.imagePath
         binding.apply {
-            Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(data.imagePath)).error(ColorDrawable(Color.BLACK)).into(imageUser)
+            Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(data.imagePath))
+                .error(ColorDrawable(Color.BLACK)).into(imageUser)
             edFirstName.setText(data.firstName)
             edLastName.setText(data.lastName)
             edEmail.setText(data.email)
         }
     }
+
     private fun decodeBase64ToBitmap(base64String: String): Bitmap {
         val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
+
     private fun hideUserLoading() {
         binding.apply {
             progressbarAccount.visibility = View.GONE
@@ -174,6 +187,7 @@ class UserAccountFragment : Fragment() {
             buttonSave.visibility = View.INVISIBLE
         }
     }
+
     companion object {
         private const val PICK_IMAGE_REQUEST = 1
     }

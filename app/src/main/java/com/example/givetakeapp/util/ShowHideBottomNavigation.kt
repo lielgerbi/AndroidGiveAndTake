@@ -6,7 +6,7 @@ import com.example.givetakeapp.R
 import com.example.givetakeapp.activities.ShoppingActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-fun Fragment.hideBottomNavigationView(){
+fun Fragment.hideBottomNavigationView() {
     val bottomNavigationView =
         (activity as ShoppingActivity).findViewById<BottomNavigationView>(
             R.id.bottomNavigation
@@ -14,7 +14,7 @@ fun Fragment.hideBottomNavigationView(){
     bottomNavigationView.visibility = View.GONE
 }
 
-fun Fragment.showBottomNavigationView(){
+fun Fragment.showBottomNavigationView() {
     val bottomNavigationView =
         (activity as ShoppingActivity).findViewById<BottomNavigationView>(
             R.id.bottomNavigation

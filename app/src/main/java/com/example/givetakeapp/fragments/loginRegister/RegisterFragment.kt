@@ -1,5 +1,6 @@
 package com.example.givetakeapp.fragments.loginRegister
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,7 +8,6 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.givetakeapp.R
 import com.example.givetakeapp.data.User
 import com.example.givetakeapp.databinding.FragmentRegisterBinding
-import com.example.givetakeapp.fragments.shopping.SearchFragment
 import com.example.givetakeapp.util.RegisterValidation
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.viewmodel.RegisterViewModel
@@ -27,18 +26,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
-private val TAG = "RegisterFragment"
 @AndroidEntryPoint
-class RegisterFragment:Fragment(R.layout.fragment_register) {
+class RegisterFragment : Fragment(R.layout.fragment_register) {
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel by viewModels<RegisterViewModel>()
-    private var imageUrl: String = ""
+    private var imageStr: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRegisterBinding.inflate(inflater)
         return binding.root
     }
@@ -59,7 +57,7 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
                     edEmailRegister.text.toString().trim(),
                     edFirstNameRegister.text.toString().trim(),
                     edLastNameRegister.text.toString().trim(),
-                    imageUrl
+                    imageStr
                 )
                 val password = edPasswordRegister.text.toString()
                 viewModel.createAccount(user, password)
@@ -69,16 +67,19 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
 
         lifecycleScope.launchWhenStarted {
             viewModel.register.collect {
-                when(it) {
+                when (it) {
                     is Resource.Loading -> {
                         binding.buttonRegisterRegister.startAnimation()
                     }
+
                     is Resource.Success -> {
                         binding.buttonRegisterRegister.revertAnimation()
                     }
+
                     is Resource.Error -> {
                         binding.buttonRegisterRegister.revertAnimation()
                     }
+
                     else -> Unit
                 }
             }
@@ -106,19 +107,22 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
             }
         }
     }
+
+    @SuppressLint("IntentReset")
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, RegisterFragment.PICK_IMAGE_REQUEST)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RegisterFragment.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri = data.data
             selectedImageUri?.let { uri ->
                 val inputStream = requireContext().contentResolver.openInputStream(uri)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
-                imageUrl = bitmapToBase64(bitmap)
+                imageStr = bitmapToBase64(bitmap)
             }
         }
     }
@@ -129,6 +133,7 @@ class RegisterFragment:Fragment(R.layout.fragment_register) {
         val byteArray = outputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
+
     companion object {
         private const val PICK_IMAGE_REQUEST = 1
     }

@@ -1,4 +1,6 @@
 package com.example.givetakeapp.fragments.shopping
+
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import com.example.givetakeapp.R
@@ -15,12 +17,9 @@ import com.example.givetakeapp.MainApp
 import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.data.Product
-import com.example.givetakeapp.data.User
-import com.example.givetakeapp.databinding.FragmentSearchBinding
 import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 import java.util.UUID
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -28,18 +27,19 @@ import java.net.HttpURLConnection
 import java.net.URL
 import android.os.AsyncTask
 import android.widget.ArrayAdapter
+import androidx.navigation.fragment.findNavController
+import com.example.givetakeapp.databinding.FragmentAddProductBinding
 
-
-class SearchFragment : Fragment(R.layout.fragment_search) {
-    private lateinit var binding: FragmentSearchBinding
-    private var imageUrl: String? = null
+class AddProductFragment : Fragment(R.layout.fragment_add_product) {
+    private lateinit var binding: FragmentAddProductBinding
+    private var imageStr: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater)
+        binding = FragmentAddProductBinding.inflate(inflater)
         return binding.root
     }
 
@@ -89,6 +89,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             return cities
         }
+
         override fun onPostExecute(result: List<String>?) {
             super.onPostExecute(result)
             if (result != null) {
@@ -103,29 +104,23 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun saveNewProduct(){
-        val category = binding.spCategory.selectedItem.toString()
-        val city = binding.spCity.selectedItem.toString()
-        val description = binding.edDescription.text.toString()
-       // val contant = binding.edName.text.toString()
-
-
+    private fun saveNewProduct() {
         val product = Product(
-            id = generateUUID(), // Generate unique ID for the product
-            category = category, // set the category
-            userEmail = SharedData.myVariable, // Set the user's email
-            city = city, // Set the city
-            description= description,
-            imagePath = imageUrl ?: "" //set image in base64
+            id = generateUUID(),
+            category = binding.spCategory.selectedItem.toString(),
+            userEmail = SharedData.myVariable,
+            city = binding.spCity.selectedItem.toString(),
+            description = binding.edDescription.text.toString(),
+            imagePath = imageStr ?: ""
         )
-        // Print the product details
         println(product)
         saveProduct(product)
-
     }
+
     fun generateUUID(): String {
         return UUID.randomUUID().toString()
     }
+
     private fun saveProduct(product: Product) {
         runBlocking {
             //MainApp.database.productDao().deleteAllProducts()
@@ -134,14 +129,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             val allProducts = MainApp.database.productDao().getAllProducts()
 
             // Change navigation to shopping
-            Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
-                // Make sure pressing back dont go back to login
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
+            findNavController().navigate(R.id.action_addProductFragment_to_homeFragment)
 
         }
     }
+
+    @SuppressLint("IntentReset")
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
@@ -155,8 +148,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             selectedImageUri?.let { uri ->
                 val inputStream = requireContext().contentResolver.openInputStream(uri)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
-                imageUrl = bitmapToBase64(bitmap)
-                println(imageUrl)
+                imageStr = bitmapToBase64(bitmap)
+                println(imageStr)
             }
         }
     }

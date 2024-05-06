@@ -20,14 +20,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
-    private lateinit var  binding: FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
     private val viewModel by viewModels<LoginViewModel>()
     private lateinit var userManager: UserManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater)
         userManager = UserManager(requireContext())
         return binding.root
@@ -51,13 +51,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         // listener to login
         lifecycleScope.launchWhenStarted {
             viewModel.login.collect {
-                when(it) {
+                when (it) {
                     is Resource.Loading -> {
                         binding.buttonLoginLogin.startAnimation()
                     }
+
                     is Resource.Success -> {
                         binding.buttonLoginLogin.revertAnimation()
-                        // Save user authentication status
                         userManager.saveUserLoggedIn(true)
                         // Change navigation to shopping
                         Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
@@ -66,11 +66,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             startActivity(intent)
                         }
                     }
+
                     is Resource.Error -> {
                         // Pop up error message
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         binding.buttonLoginLogin.revertAnimation()
                     }
+
                     else -> Unit
                 }
             }

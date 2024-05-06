@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater)
         userManager = UserManager(requireContext())
         return binding.root
@@ -51,11 +51,11 @@ class ProfileFragment : Fragment() {
         }
         //navigate to the user products page when click on my products
         binding.linearAllProduct.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_cartFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_myProductsFragment)
         }
         //when click on logout delete connected user data and navigate to introduction page
         binding.linearLogOut.setOnClickListener {
-            SharedData.myVariable= ""
+            SharedData.myVariable = ""
             userManager.saveUserLoggedIn(false)
             viewModel.logout()
             val intent = Intent(requireActivity(), LoginRegisterActivity::class.java)
@@ -63,26 +63,29 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
         }
 
-
         lifecycleScope.launchWhenStarted {
             viewModel.user.collectLatest {
                 when (it) {
                     is Resource.Loading -> {
                         binding.progressbarSettings.visibility = View.VISIBLE
                     }
+
                     is Resource.Success -> {
                         binding.progressbarSettings.visibility = View.GONE
-                        Glide.with(requireView()).load(decodeBase64ToBitmap(it.data!!.imagePath)).error(ColorDrawable(
-                            Color.BLACK)).into(binding.imageUser)
+                        Glide.with(requireView()).load(decodeBase64ToBitmap(it.data!!.imagePath))
+                            .error(
+                                ColorDrawable(
+                                    Color.BLACK
+                                )
+                            ).into(binding.imageUser)
                         binding.tvUserName.text = "${it.data.firstName} ${it.data.lastName}"
-
-
-
                     }
+
                     is Resource.Error -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         binding.progressbarSettings.visibility = View.GONE
                     }
+
                     else -> Unit
                 }
             }
@@ -93,9 +96,9 @@ class ProfileFragment : Fragment() {
         val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
+
     override fun onResume() {
         super.onResume()
-
         showBottomNavigationView()
     }
 }

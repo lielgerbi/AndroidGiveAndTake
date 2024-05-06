@@ -42,6 +42,5 @@ class FurnitureFragment: BaseCategoryFragment() {
     }
 
     override fun onAllProductsPagingRequest() {
-
     }
 }
