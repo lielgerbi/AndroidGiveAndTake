@@ -57,15 +57,13 @@ class UserAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
-
         imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
                 uri?.let {
                     val inputStream = requireContext().contentResolver.openInputStream(uri)
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     imageStr = bitmapToBase64(bitmap)
-                    imageUser.setImageBitmap(bitmap)
+                    //imageUser.setImageBitmap(bitmap)
                 }
             }
         lifecycleScope.launchWhenStarted {
@@ -140,7 +138,7 @@ class UserAccountFragment : Fragment() {
                 imageStr = bitmapToBase64(bitmap)
 
                 //to do - show the image when change
-                 Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
+                 //Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
             }
         }
     }
