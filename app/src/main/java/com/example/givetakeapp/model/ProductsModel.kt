@@ -98,6 +98,7 @@ class ProductsModel private constructor() {
         firestoreModel.deleteProduct(id) {
             executor.execute {
                 database.productDao().deleteProduct(id)
+                Product.lastUpdated = System.currentTimeMillis()
                 MainApp.mainHandler.post {
                     callback()
                 }
