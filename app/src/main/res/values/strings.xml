@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GiveTake</string>
-    <string name="rightAddress">The Right Address\nFor Shopping\nAnyday</string>
-    <string name="qulity">It is now very easy to reach the\nbest quality among the\nproducts on the internet!</string>
+    <string name="rightAddress">Save Money\nMake the World\nA Better Place</string>
+    <string name="qulity">donate your old belongings\nand help others to find\ntheir wish with zero waste!</string>
     <string name="select_category">Select Category</string>
     <array name="category_options">
         <item>Chair</item>
