@@ -37,14 +37,13 @@ class ProductsModel private constructor() {
     }
 
     fun insertProduct(product: Product, callback: () -> Unit) {
-        firestoreModel.insertProduct(product, callback)
-
-//        executor.execute {
-//            MainApp.database.productDao().insertProduct(product)
-//            MainApp.mainHandler.post {
-//                callback()
-//            }
-//        }
+        firestoreModel.insertProduct(product) {
+            executor.execute {
+                MainApp.mainHandler.post {
+                    callback()
+                }
+            }
+        }
     }
 
     fun getAllProductsByCategory(category: String, callback: (List<Product>) -> Unit) {
@@ -70,13 +69,12 @@ class ProductsModel private constructor() {
     }
 
     fun deleteProduct(id: String, callback: () -> Unit) {
-        firestoreModel.deleteProduct(id, callback)
-
-//        executor.execute {
-//            MainApp.database.productDao().deleteProduct(id)
-//            MainApp.mainHandler.post {
-//                callback()
-//            }
-//        }
+        firestoreModel.deleteProduct(id) {
+            executor.execute {
+                MainApp.mainHandler.post {
+                    callback()
+                }
+            }
+        }
     }
 }
