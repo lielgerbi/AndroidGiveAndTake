@@ -36,8 +36,9 @@ class ProductsModel private constructor() {
                     }
                 }
 
+                val newProducts = database.productDao().getAllProducts()
                 MainApp.mainHandler.post {
-                    callback(database.productDao().getAllProducts())
+                    callback(newProducts)
                 }
             }
         }
@@ -77,8 +78,9 @@ class ProductsModel private constructor() {
                     }
                 }
 
+                val newProducts = database.productDao().getAllProductsByCategory(category)
                 MainApp.mainHandler.post {
-                    callback(database.productDao().getAllProductsByCategory(category))
+                    callback(newProducts)
                 }
             }
         }
