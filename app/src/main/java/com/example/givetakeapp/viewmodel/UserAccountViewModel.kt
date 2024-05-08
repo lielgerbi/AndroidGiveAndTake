@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.givetakeapp.MainApp
 import com.example.givetakeapp.SharedData
 import com.example.givetakeapp.data.User
+import com.example.givetakeapp.model.UserModel
 import com.example.givetakeapp.util.RegisterValidation
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.validateEmail
@@ -27,20 +28,22 @@ class UserAccountViewModel @Inject constructor(
     val updateInfo = _updateInfo.asStateFlow()
 
     init {
-        getUser()
+        getUserFromDb()
     }
 
-    private fun getUser() {
-        var user: User;
+    private fun success(user: User) {
+        viewModelScope.launch {
+            _user.emit(Resource.Success(user))
+        }
+    }
+
+    private fun getUserFromDb() {
         viewModelScope.launch {
             _user.emit(Resource.Loading())
         }
-        viewModelScope.launch {
-            runBlocking {
-                user = MainApp.database.userDao().getUserByEmail(SharedData.myVariable)
-            }
 
-            _user.emit(Resource.Success(user))
+        UserModel.instance.getUserByEmail(SharedData.myVariable) { user ->
+            success(user)
         }
     }
 
@@ -61,11 +64,9 @@ class UserAccountViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            runBlocking {
-                // user = MainApp.database.userDao().getAllUsers()
-
-                MainApp.database.userDao().insertUser(user)
+            UserModel.instance.insertUser(user) {
             }
+
             SharedData.myVariable = user.email
             _updateInfo.emit(Resource.Success(user))
         }

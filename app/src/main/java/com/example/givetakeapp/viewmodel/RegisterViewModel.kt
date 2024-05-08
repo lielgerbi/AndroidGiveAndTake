@@ -3,6 +3,7 @@ package com.example.givetakeapp.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.givetakeapp.MainApp
 import com.example.givetakeapp.data.User
+import com.example.givetakeapp.model.UserModel
 import com.example.givetakeapp.util.RegisterFieldState
 import com.example.givetakeapp.util.RegisterValidation
 import com.example.givetakeapp.util.Resource
@@ -36,8 +37,9 @@ class RegisterViewModel @Inject constructor(
             firebaseAuth.createUserWithEmailAndPassword(user.email, password)
                 .addOnSuccessListener {
                     it.user?.let {
-                        saveUser(user)
-                        _register.value = Resource.Success(it)
+                        UserModel.instance.insertUser(user) {
+                            _register.value = Resource.Success(it)
+                        }
                     }
                 }.addOnFailureListener {
                     _register.value = Resource.Error(it.message.toString())
@@ -49,13 +51,6 @@ class RegisterViewModel @Inject constructor(
             runBlocking {
                 _validation.send(registerFieldsState)
             }
-        }
-    }
-
-    private fun saveUser(user: User) {
-        runBlocking {
-            MainApp.database.productDao().deleteAllProducts()
-            MainApp.database.userDao().insertUser(user)
         }
     }
 

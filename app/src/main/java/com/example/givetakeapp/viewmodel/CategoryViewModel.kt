@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.givetakeapp.MainApp
 import com.example.givetakeapp.data.Category
 import com.example.givetakeapp.data.Product
+import com.example.givetakeapp.model.ProductsModel
 import com.example.givetakeapp.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,13 +27,12 @@ class CategoryViewModel(
         var allProducts: List<Product>;
         viewModelScope.launch {
             _allProducts.emit(Resource.Loading())
-            runBlocking {
-                // Retrieve all products from the database
-                allProducts =
-                    MainApp.database.productDao().getAllProductsByCategory(category.category)
-            }
-            viewModelScope.launch {
-                _allProducts.emit(Resource.Success(allProducts))
+            ProductsModel.instance.getAllProductsByCategory(category.category) { products ->
+                allProducts = products
+
+                viewModelScope.launch {
+                    _allProducts.emit(Resource.Success(allProducts))
+                }
             }
         }
     }

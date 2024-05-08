@@ -9,8 +9,8 @@ import com.example.givetakeapp.data.User
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: User)
+    fun insertUser(user: User)
 
     @Query("SELECT * FROM users WHERE email = :email")
-    suspend fun getUserByEmail(email: String): User
+    fun getUserByEmail(email: String): User
 }

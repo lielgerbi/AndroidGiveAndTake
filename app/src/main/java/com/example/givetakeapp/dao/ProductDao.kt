@@ -9,19 +9,16 @@ import com.example.givetakeapp.data.Product
 @Dao
 interface ProductDao {
     @Query("SELECT * FROM products")
-    suspend fun getAllProducts(): List<Product>
+    fun getAllProducts(): List<Product>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProduct(product: Product)
-
-    @Query("DELETE FROM products")
-    suspend fun deleteAllProducts()
+    fun insertProduct(product: Product)
 
     @Query("SELECT * FROM products WHERE category = :category")
-    suspend fun getAllProductsByCategory(category: String): List<Product>
+    fun getAllProductsByCategory(category: String): List<Product>
 
     @Query("SELECT * FROM products WHERE userEmail = :userEmail")
-    suspend fun getAllProductsByUser(userEmail: String): List<Product>
+    fun getAllProductsByUser(userEmail: String): List<Product>
 
     @Query("DELETE FROM products where id = :id")
-    suspend fun deleteProduct(id: String)
+    fun deleteProduct(id: String)
 }

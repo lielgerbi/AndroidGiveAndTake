@@ -25,6 +25,7 @@ import com.example.givetakeapp.R
 import com.example.givetakeapp.activities.ShoppingActivity
 import com.example.givetakeapp.data.Product
 import com.example.givetakeapp.databinding.FragmentEditProductBinding
+import com.example.givetakeapp.model.ProductsModel
 import com.example.givetakeapp.util.hideBottomNavigationView
 import com.example.givetakeapp.util.showBottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -176,8 +177,7 @@ class EditProductFragment : Fragment() {
     }
 
     private fun saveProduct(product: Product) {
-        runBlocking {
-            MainApp.database.productDao().insertProduct(product)
+        ProductsModel.instance.insertProduct(product) {
             Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)

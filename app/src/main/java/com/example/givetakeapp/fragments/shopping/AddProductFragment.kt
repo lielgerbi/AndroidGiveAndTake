@@ -29,6 +29,7 @@ import android.os.AsyncTask
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import com.example.givetakeapp.databinding.FragmentAddProductBinding
+import com.example.givetakeapp.model.ProductsModel
 
 class AddProductFragment : Fragment(R.layout.fragment_add_product) {
     private lateinit var binding: FragmentAddProductBinding
@@ -122,15 +123,9 @@ class AddProductFragment : Fragment(R.layout.fragment_add_product) {
     }
 
     private fun saveProduct(product: Product) {
-        runBlocking {
-            //MainApp.database.productDao().deleteAllProducts()
-            MainApp.database.productDao().insertProduct(product)
-            // Retrieve all products from the database
-            val allProducts = MainApp.database.productDao().getAllProducts()
-
+        ProductsModel.instance.insertProduct(product) {
             // Change navigation to shopping
             findNavController().navigate(R.id.action_addProductFragment_to_homeFragment)
-
         }
     }
 
