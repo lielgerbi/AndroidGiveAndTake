@@ -99,6 +99,7 @@ class ProductsFirestoreModel {
             "city" to product.city,
             "description" to product.description,
             "imagePath" to product.imagePath,
+            "isDeleted" to product.isDeleted,
             "lastUpdated" to FieldValue.serverTimestamp()
         )
     }
@@ -110,12 +111,13 @@ class ProductsFirestoreModel {
         val city = json.getString("city") ?: ""
         val description = json.getString("description") ?: ""
         val imagePath = json.getString("imagePath") ?: ""
+        val isDeleted = json.getBoolean("isDeleted") ?: false
         val product = Product(id, category, userEmail, city, description, imagePath)
         val timestamp: Timestamp? = json.getTimestamp("lastUpdated")
         timestamp?.let {
             product.lastUpdated = it.seconds
         }
-
+        product.isDeleted = isDeleted
         return product
     }
 }
