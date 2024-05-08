@@ -47,30 +47,57 @@ class ProductsModel private constructor() {
     }
 
     fun getAllProductsByCategory(category: String, callback: (List<Product>) -> Unit) {
-        firestoreModel.getAllProductsByCategory(category, callback)
+        val lastUpdated: Long = Product.lastUpdated
 
-//        executor.execute {
-//            val products = database.productDao().getAllProductsByCategory(category)
-//            MainApp.mainHandler.post {
-//                callback(products)
-//            }
-//        }
+        firestoreModel.getAllProductsByCategory(lastUpdated, category) { list ->
+            executor.execute {
+                var time = lastUpdated
+                for (product in list) {
+                    database.productDao().insertProduct(product)
+
+                    product.lastUpdated?.let {
+                        if (time < it) {
+                            time = product.lastUpdated ?: System.currentTimeMillis()
+                        }
+                    }
+                }
+                Product.lastUpdated = time
+                val products = database.productDao().getAllProductsByCategory(category)
+                MainApp.mainHandler.post {
+                    callback(products)
+                }
+            }
+        }
     }
 
     fun getAllProductsByUser(userEmail: String, callback: (List<Product>) -> Unit) {
-        firestoreModel.getAllProductsByUser(userEmail, callback)
+        val lastUpdated: Long = Product.lastUpdated
 
-//        executor.execute {
-//            val products = database.productDao().getAllProductsByUser(userEmail)
-//            MainApp.mainHandler.post {
-//                callback(products)
-//            }
-//        }
+        firestoreModel.getAllProductsByUser(lastUpdated, userEmail) { list ->
+            executor.execute {
+                var time = lastUpdated
+                for (product in list) {
+                    database.productDao().insertProduct(product)
+
+                    product.lastUpdated?.let {
+                        if (time < it) {
+                            time = product.lastUpdated ?: System.currentTimeMillis()
+                        }
+                    }
+                }
+                Product.lastUpdated = time
+                val products = database.productDao().getAllProductsByUser(userEmail)
+                MainApp.mainHandler.post {
+                    callback(products)
+                }
+            }
+        }
     }
 
     fun deleteProduct(id: String, callback: () -> Unit) {
         firestoreModel.deleteProduct(id) {
             executor.execute {
+                database.productDao().deleteProduct(id)
                 MainApp.mainHandler.post {
                     callback()
                 }

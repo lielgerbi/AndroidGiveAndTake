@@ -23,6 +23,7 @@ class ProductsFirestoreModel {
                         }
                         callback(productsList)
                     }
+
                     false -> callback(listOf())
                 }
             }
@@ -38,8 +39,9 @@ class ProductsFirestoreModel {
             }
     }
 
-    fun getAllProductsByCategory(category: String, callback: (List<Product>) -> Unit) {
+    fun getAllProductsByCategory(since: Long, category: String, callback: (List<Product>) -> Unit) {
         remoteDB.collection("products")
+            .whereGreaterThanOrEqualTo("lastUpdated", Timestamp(since, 0))
             .whereEqualTo("category", category)
             .get()
             .addOnCompleteListener {
@@ -51,13 +53,15 @@ class ProductsFirestoreModel {
                         }
                         callback(productsList)
                     }
+
                     false -> callback(listOf())
                 }
             }
     }
 
-    fun getAllProductsByUser(userEmail: String, callback: (List<Product>) -> Unit) {
+    fun getAllProductsByUser(since: Long, userEmail: String, callback: (List<Product>) -> Unit) {
         remoteDB.collection("products")
+            .whereGreaterThanOrEqualTo("lastUpdated", Timestamp(since, 0))
             .whereEqualTo("userEmail", userEmail)
             .get()
             .addOnCompleteListener {
@@ -69,6 +73,7 @@ class ProductsFirestoreModel {
                         }
                         callback(productsList)
                     }
+
                     false -> callback(listOf())
                 }
             }

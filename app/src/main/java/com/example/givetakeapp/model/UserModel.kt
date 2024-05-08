@@ -1,14 +1,11 @@
 package com.example.givetakeapp.model
 
-import com.example.givetakeapp.MainApp
 import com.example.givetakeapp.data.User
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class UserModel private constructor() {
-    private val database = MainApp.database
-    private var executor = MainApp.executorService
     private val remoteDB = Firebase.firestore
 
     companion object {
@@ -23,13 +20,6 @@ class UserModel private constructor() {
             .addOnSuccessListener {
                 callback()
             }
-
-//        executor.execute {
-//            MainApp.database.userDao().insertUser(user)
-//            MainApp.mainHandler.post {
-//                callback()
-//            }
-//        }
     }
 
     fun getUserByEmail(email: String, callback: (User) -> Unit) {
@@ -46,13 +36,6 @@ class UserModel private constructor() {
                     false -> callback(User())
                 }
             }
-
-//        executor.execute {
-//            val user = database.userDao().getUserByEmail(email)
-//            MainApp.mainHandler.post {
-//                callback(user)
-//            }
-//        }
     }
 
     private fun toUserMap(user: User): HashMap<String, String> {
