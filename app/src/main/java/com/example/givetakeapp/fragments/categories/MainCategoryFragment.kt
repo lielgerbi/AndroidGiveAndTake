@@ -90,6 +90,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     }
     override fun onResume() {
         super.onResume()
+        viewModel.fetchAllProducts()
         showBottomNavigationView()
     }
 }

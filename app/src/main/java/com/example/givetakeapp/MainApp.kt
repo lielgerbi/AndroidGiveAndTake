@@ -24,7 +24,7 @@ class MainApp: Application() {
         database = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "my_database1"
+            "my_database2"
         ).build()
         executorService = Executors.newFixedThreadPool(5)
         mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())

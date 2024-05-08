@@ -16,6 +16,7 @@ import com.example.givetakeapp.adapters.MyProductsAdapter
 import com.example.givetakeapp.databinding.FragmentMyProductsBinding
 import com.example.givetakeapp.util.Resource
 import com.example.givetakeapp.util.VerticalItemDecoration
+import com.example.givetakeapp.util.showBottomNavigationView
 import com.example.givetakeapp.viewmodel.MyProductsViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -109,5 +110,11 @@ class MyProductsFragment : Fragment(R.layout.fragment_my_products) {
             adapter = myProductsAdapter
             addItemDecoration(VerticalItemDecoration())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMyProducts()
+        showBottomNavigationView()
     }
 }

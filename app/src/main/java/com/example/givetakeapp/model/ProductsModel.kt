@@ -29,8 +29,15 @@ class ProductsModel private constructor() {
                 }
                 Product.lastUpdated = time
                 val products = database.productDao().getAllProducts()
+
+                for (product in products) {
+                    if (product.lastUpdated!! < Product.lastUpdated) {
+                        database.productDao().deleteProduct(product.id)
+                    }
+                }
+
                 MainApp.mainHandler.post {
-                    callback(products)
+                    callback(database.productDao().getAllProducts())
                 }
             }
         }
@@ -63,8 +70,15 @@ class ProductsModel private constructor() {
                 }
                 Product.lastUpdated = time
                 val products = database.productDao().getAllProductsByCategory(category)
+
+                for (product in products) {
+                    if (product.lastUpdated!! < Product.lastUpdated) {
+                        database.productDao().deleteProduct(product.id)
+                    }
+                }
+
                 MainApp.mainHandler.post {
-                    callback(products)
+                    callback(database.productDao().getAllProductsByCategory(category))
                 }
             }
         }

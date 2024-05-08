@@ -23,7 +23,7 @@ class MyProductsViewModel @Inject constructor() : ViewModel() {
         getMyProducts()
     }
 
-    private fun getMyProducts() {
+    fun getMyProducts() {
         var allProducts: List<Product>;
         viewModelScope.launch {
             _myProducts.emit(Resource.Loading())
