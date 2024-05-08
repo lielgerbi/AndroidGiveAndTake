@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.givetakeapp.R
 import com.example.givetakeapp.adapters.AllProductsAdapter
 import com.example.givetakeapp.databinding.FragmentMainCategoryBinding
@@ -42,6 +43,10 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         super.onViewCreated(view, savedInstanceState)
         setupBestProducts()
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.fetchAllProducts()
+        }
+
         allProductsAdapter.onClick = {
             val b = Bundle().apply { putParcelable("product",it) }
             findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
@@ -56,6 +61,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                     is Resource.Success -> {
                         allProductsAdapter.differ.submitList(it.data)
                         binding.bestProductsProgressbar.visibility = View.GONE
+                        binding.swipeRefreshLayout.isRefreshing = false
                     }
                     is Resource.Error -> {
                         Log.e(TAG, it.message.toString())
