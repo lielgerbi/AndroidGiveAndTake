@@ -29,18 +29,18 @@ class IntroductionFragment : Fragment(R.layout.fragment_introdcution) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (userManager.isUserLoggedIn()) {
-            SharedData.myVariable = userManager.getUserEmail().toString()
-            // Change navigation to shopping
-            Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
-                // Make sure pressing back dont go back to login
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
-        } else {
+//        if (userManager.isUserLoggedIn()) {
+//            SharedData.myVariable = userManager.getUserEmail().toString()
+//            // Change navigation to shopping
+//            Intent(requireActivity(), ShoppingActivity::class.java).also { intent ->
+//                // Make sure pressing back dont go back to login
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                startActivity(intent)
+//            }
+//        } else {
             binding.buttonStart.setOnClickListener {
                 findNavController().navigate(R.id.action_introductionFragment_to_accountOptionsFragment2)
-            }
+//            }
         }
     }
 }

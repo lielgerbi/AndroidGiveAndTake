@@ -40,15 +40,10 @@ class UserAccountFragment : Fragment() {
     private val viewModel by viewModels<UserAccountViewModel>()
     private var imageStr: String = ""
     private lateinit var imageUser: ImageView
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        imageActivityResultLauncher =
-//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-//                imageUri = it.data?.data
-//                Glide.with(this).load(imageUri).into(binding.imageUser)
-//            }
     }
 
     override fun onCreateView(
@@ -62,7 +57,17 @@ class UserAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
 
+        imagePickerLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+                uri?.let {
+                    val inputStream = requireContext().contentResolver.openInputStream(uri)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    imageStr = bitmapToBase64(bitmap)
+                    imageUser.setImageBitmap(bitmap)
+                }
+            }
         lifecycleScope.launchWhenStarted {
             viewModel.user.collectLatest {
                 when (it) {
@@ -93,7 +98,6 @@ class UserAccountFragment : Fragment() {
 
                     is Resource.Success -> {
                         binding.buttonSave.revertAnimation()
-                        //findNavController().navigateUp()
                     }
 
                     is Resource.Error -> {
@@ -122,13 +126,10 @@ class UserAccountFragment : Fragment() {
         }
     }
 
-    @SuppressLint("IntentReset")
-    private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
 
+    private fun openImagePicker() {
+        imagePickerLauncher.launch("image/*")
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
@@ -137,8 +138,9 @@ class UserAccountFragment : Fragment() {
                 val inputStream = requireContext().contentResolver.openInputStream(uri)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imageStr = bitmapToBase64(bitmap)
+
                 //to do - show the image when change
-                // Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
+                 Glide.with(this@UserAccountFragment).load(decodeBase64ToBitmap(imageStr)).error(ColorDrawable(Color.BLACK)).into(imageUser)
             }
         }
     }

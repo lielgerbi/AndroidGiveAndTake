@@ -27,6 +27,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 import android.os.AsyncTask
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.example.givetakeapp.databinding.FragmentAddProductBinding
 import com.example.givetakeapp.model.ProductsModel
@@ -34,7 +36,7 @@ import com.example.givetakeapp.model.ProductsModel
 class AddProductFragment : Fragment(R.layout.fragment_add_product) {
     private lateinit var binding: FragmentAddProductBinding
     private var imageStr: String? = null
-
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +50,15 @@ class AddProductFragment : Fragment(R.layout.fragment_add_product) {
         super.onViewCreated(view, savedInstanceState)
         // Call API to fetch cities
         FetchCitiesTask().execute()
+
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                imageStr = bitmapToBase64(bitmap)
+                println(imageStr)
+            }
+        }
 
         binding.buttonImagesPicker.setOnClickListener {
             openImagePicker()
@@ -128,13 +139,17 @@ class AddProductFragment : Fragment(R.layout.fragment_add_product) {
             findNavController().navigate(R.id.action_addProductFragment_to_homeFragment)
         }
     }
-
-    @SuppressLint("IntentReset")
     private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        imagePickerLauncher.launch("image/*")
     }
+
+//    @SuppressLint("IntentReset")
+//    private fun openImagePicker() {
+//        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        intent.type = "image/*"
+//        val chooserIntent = Intent.createChooser(intent, "Select Image")
+//        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST)
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
