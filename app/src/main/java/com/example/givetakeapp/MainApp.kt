@@ -5,6 +5,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
 import androidx.room.Room
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -22,7 +24,7 @@ class MainApp: Application() {
         database = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "my_database"
+            "my_database1"
         ).build()
         executorService = Executors.newFixedThreadPool(5)
         mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())
