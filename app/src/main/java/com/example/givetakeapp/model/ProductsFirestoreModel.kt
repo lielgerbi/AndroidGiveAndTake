@@ -13,6 +13,7 @@ class ProductsFirestoreModel {
     fun getAllProducts(since: Long, callback: (List<Product>) -> Unit) {
         remoteDB.collection("products")
             .whereGreaterThanOrEqualTo("lastUpdated", Timestamp(since, 0))
+            .whereEqualTo("isDeleted", false)
             .get()
             .addOnCompleteListener {
                 when (it.isSuccessful) {
@@ -43,6 +44,7 @@ class ProductsFirestoreModel {
         remoteDB.collection("products")
             .whereGreaterThanOrEqualTo("lastUpdated", Timestamp(since, 0))
             .whereEqualTo("category", category)
+            .whereEqualTo("isDeleted", false)
             .get()
             .addOnCompleteListener {
                 when (it.isSuccessful) {
@@ -63,6 +65,7 @@ class ProductsFirestoreModel {
         remoteDB.collection("products")
             .whereGreaterThanOrEqualTo("lastUpdated", Timestamp(since, 0))
             .whereEqualTo("userEmail", userEmail)
+            .whereEqualTo("isDeleted", false)
             .get()
             .addOnCompleteListener {
                 when (it.isSuccessful) {
@@ -82,10 +85,10 @@ class ProductsFirestoreModel {
     fun deleteProduct(id: String, callback: () -> Unit) {
         remoteDB.collection("products")
             .document(id)
-            .delete()
+            .update("isDeleted", true)
             .addOnSuccessListener {
-                callback()
-            }
+            callback()
+        }
     }
 
     private fun toProductMap(product: Product): HashMap<String, Any> {

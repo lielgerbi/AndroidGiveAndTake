@@ -15,6 +15,7 @@ data class Product(
     val city: String,
     val description: String,
     var imagePath: String = "",
+    var isDeleted: Boolean = false,
     var lastUpdated: Long? = null
 ) : Parcelable {
     constructor(): this("","","","","","")
